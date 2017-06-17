@@ -11,7 +11,6 @@
 
         public const string LastFmId = "";
         public const string LastFmSecret = "";
-
         
         public const string YouTubeIdMusicus = "";
         public const string YoutubeId = "";
