@@ -1,0 +1,384 @@
+﻿<Musicus:PageBase
+    x:Class="Musicus.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:local="using:Musicus"
+    xmlns:Musicus="using:Musicus"
+
+    x:Name="Page"
+    xmlns:utilities="using:Musicus.Utilities"
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"   
+    xmlns:flip="using:Musicus.Helpers.CustomContols"
+    xmlns:customTriggers="using:Musicus.Helpers.Triggers"
+    DataContext="{Binding HomePage, Source={StaticResource Locator}}">
+
+ 
+    <Grid>
+        <Grid.Resources>
+            
+            <Storyboard x:Name="FadeInAnimation">
+                <DoubleAnimation Storyboard.TargetName="BackgroundImage" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"/>
+            </Storyboard>
+
+            
+            
+            <DataTemplate x:Name="PopularAlbumListTemplateLocal">
+                <Grid Background="#131313" Margin="0,0,5,0" Height="{Binding AlbumHeight, Source={StaticResource WidthConverter}}" Width="{Binding VideoWidth, Source={StaticResource WidthConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="70"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Width="{Binding VideoWidth, Source={StaticResource WidthConverter}}" Height="{Binding VideoWidth, Source={StaticResource WidthConverter}}">
+                        <Grid.Background>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Artwork}"/>
+                        </Grid.Background>
+                    </Grid>
+                    
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10" Grid.Row="1">
+                        <TextBlock Text="{Binding Title}" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" FontSize="14"/>
+                        <TextBlock Text="{Binding ArtistName}" Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}" FontSize="11"/>
+                    </StackPanel>
+                    
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Name="PopularTrackListTemplateLocal">
+                <Grid Background="#131313" Margin="0,0,5,0" Height="{Binding AlbumHeight, Source={StaticResource WidthConverter}}" Width="{Binding VideoWidth, Source={StaticResource WidthConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="70"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Width="{Binding VideoWidth, Source={StaticResource WidthConverter}}" 
+                            Height="{Binding VideoWidth, Source={StaticResource WidthConverter}}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding ArtworkImage}" Stretch="UniformToFill"/>
+                        </Border.Background>
+                    </Border>
+
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10" Grid.Row="1">
+                        <TextBlock Text="{Binding Name}" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" FontSize="14"/>
+                        <TextBlock Text="{Binding Artist}" Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}" FontSize="11"/>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+
+        </Grid.Resources>
+
+        <Grid x:Name="BackgroundImage" Visibility="{Binding PlayerModel.SettingViewModel.Background, Converter={StaticResource VisibilityConverter}}">
+            <Grid.Background>
+                <ImageBrush utilities:BlurImageTool.Source="{Binding PlayerModel.CurrentSong.Album.Artwork.Uri}" utilities:BlurImageTool.BlurPercent="151" Stretch="UniformToFill" Opacity=".35"/>
+            </Grid.Background>
+        </Grid>
+
+        <Pivot HeaderTemplate="{StaticResource PivotHeaderTemplate}">
+            <PivotItem Header="RECENT" Margin="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Margin="12,5" Click="OpenSearchHelper" HorizontalAlignment="Right" Style="{StaticResource PlainButtonStyle}">
+                        <Border Width="40" CornerRadius="40" Height="40" Background="{StaticResource SystemControlBackgroundBaseLowBrush}">
+                            <SymbolIcon Symbol="Find"/>
+                        </Border>
+                    </Button>
+
+                    <Grid Grid.Row="1">
+                        <TextBlock Margin="{StaticResource PcPadding}"
+                                   Text="{Binding Message}" 
+                                   Visibility="{Binding Message,Converter={StaticResource EmptyVisibilityConverter}}" 
+                                   Style="{StaticResource MessageTextStyle}"/>
+
+                        <GridView x:Name="PlayHistory" 
+                                  IsItemClickEnabled="True" 
+                                  Padding="{StaticResource PcPadding}" 
+                                  ItemsSource="{Binding History}" ItemClick="HistorySongClick" 
+                                  ItemTemplate="{StaticResource RecentHistoryLikedTemplate}"/>
+                    </Grid>
+                    
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Header="WHAT'S NEW" Margin="0">
+                <ScrollViewer>
+                    <StackPanel>
+
+                        <TextBlock Margin="{StaticResource PcPadding}"
+                                   Text="{Binding WhatsNewMessage}" 
+                                   Visibility="{Binding WhatsNewMessage,Converter={StaticResource EmptyVisibilityConverter}}" 
+                                   Style="{StaticResource MessageTextStyle}"/>
+                       
+                        <Grid Visibility="{Binding IsLoading,Converter={StaticResource ReverseVisibilityConverter}}">
+                            <StackPanel Visibility="{Binding WhatsNewMessage,Converter={StaticResource ReverseEmptyVisibilityConverter}}">
+
+                                <FlipView x:Name="TopArtistsFlipView" Background="Transparent" 
+                                          Tapped="GoToArtists" Margin="{StaticResource PcPadding}"
+                                          Height="280" ItemsSource="{Binding TopArtists}">
+
+                                    <FlipView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </FlipView.ItemsPanel>
+
+                                    <FlipView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Height="280" Background="#131313">
+                                                <Grid>
+                                                    <Grid.Background>
+                                                        <ImageBrush utilities:BlurImageTool.Source="{Binding Artwork}" utilities:BlurImageTool.BlurPercent="151" Stretch="UniformToFill" Opacity=".7"/>
+                                                    </Grid.Background>
+                                                </Grid>
+
+                                                <StackPanel Margin="10" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                                    <TextBlock Text="{Binding Name}" TextAlignment="Center" Style="{StaticResource PivotItemHeaderTextStyle}"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </FlipView.ItemTemplate>
+                                </FlipView>
+
+                                <flip:FlipViewIndicator HorizontalAlignment="Center" FlipView="{Binding ElementName=TopArtistsFlipView}" />
+
+                  
+                                <Grid x:Name="TopTracksGrid" Margin="12,10,12,5">
+                                    <Grid.Background>
+                                        <ImageBrush utilities:BlurImageTool.Source="ms-appx:///Assets/PcAppIcon/190579.jpg" utilities:BlurImageTool.BlurPercent="151" Stretch="UniformToFill" Opacity=".35"/>
+                                    </Grid.Background>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel x:Name="NormalTrackStackPanel" Padding="5" VerticalAlignment="Center">
+                                        <TextBlock Text="Top Tracks" Style="{StaticResource HeaderTextStyle}"/>
+                                        <TextBlock TextWrapping="Wrap" Style="{StaticResource PrimaryTextStyle}">
+                                            <Run Text="Discover the list of top tracks from all around the world." /> <LineBreak/>
+                                            <Run Text="Top trending tracks of this week."/>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="CenteredTrackStackPanel" Padding="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Top Tracks" TextAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource HeaderTextStyle}"/>
+                                     
+                                        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Style="{StaticResource PrimaryTextStyle}">
+                                            <Run Text="Discover the list of top tracks from all around the world." /> <LineBreak/>
+                                            <Run Text="Top trending tracks of this week."/>
+                                        </TextBlock>
+                                        
+                                        <Button Background="{StaticResource MusicusOtherColor}" Margin="0,5" HorizontalAlignment="Center" Content="Show all" Padding="12,7" Click="ShowAllTopTracksClicked"/>
+                                   
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Padding="0,5,5,5">
+
+                                        <Button Click="ShowAllTopTracksClicked" Margin="0,0,0,5" HorizontalAlignment="Right" Style="{StaticResource PlainButtonStyle}">
+                                            <TextBlock Text="Show all" Foreground="{StaticResource MusicusOtherColor}" Style="{StaticResource PrimaryTextStyle}" FontSize="13"/>
+                                        </Button>
+                                       
+                                        <ListView x:Name="PopularSongsList" 
+                                                  HorizontalAlignment="Right"
+                                                  ItemsSource="{Binding SmallPopular}" 
+                                                  ItemContainerStyle="{StaticResource NoMarginListViewItem}"
+                                                  IsItemClickEnabled="True" 
+                                                  ScrollViewer.HorizontalScrollMode="Enabled"
+                                                  ScrollViewer.VerticalScrollMode="Enabled"
+                                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+
+                                            <ListView.ItemTemplateSelector>
+                                                <helpers:DataTemplateHelper AdvertTemplate="{StaticResource AdvertTemplateWithAlbumHeightWrapperPc}"
+                                                                            ListAdvertTemplate="{StaticResource ListAdvertTemplate}"
+                                                                            NormalTemplate="{StaticResource PopularTrackListTemplateLocal}"/>
+                                            </ListView.ItemTemplateSelector>
+
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="ItemClick">
+                                                    <core:InvokeCommandAction Command="{Binding SongClickCommand}" />
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+
+                                        </ListView>
+                                    </StackPanel>                                    
+                                  
+                                </Grid>
+
+
+                                <Grid x:Name="TopAlbumsGrid" Margin="12,5,12,5">
+                                    <Grid.Background>
+                                        <ImageBrush utilities:BlurImageTool.Source="ms-appx:///Assets/PcAppIcon/114778.jpg" utilities:BlurImageTool.BlurPercent="151" Stretch="UniformToFill" Opacity=".35"/>
+                                    </Grid.Background>
+                                    
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel x:Name="NormalAlbumStackPanel" Padding="5" VerticalAlignment="Center">
+                                        <TextBlock Text="Top Albums" Style="{StaticResource HeaderTextStyle}"/>
+                                        <TextBlock TextWrapping="Wrap" Style="{StaticResource PrimaryTextStyle}">
+                                            <Run Text="Discover the list of top albums from all around the world." /> <LineBreak/>
+                                            <Run Text="Top trending albums of the day."/>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="CenteredAlbumStackPanel" Padding="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Top Albums" TextAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource HeaderTextStyle}"/>
+                                        <TextBlock  HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Style="{StaticResource PrimaryTextStyle}">
+                                            <Run Text="Discover the list of top albums from all around the world." /> <LineBreak/>
+                                            <Run Text="Top trending albums of the day."/>
+                                        </TextBlock>
+
+                                        <Button Background="{StaticResource MusicusOtherColor}" Margin="0,5" HorizontalAlignment="Center" Content="Show all" Padding="12,7" Click="ShowAllTopAlbumsClicked"/>
+                               
+                                    </StackPanel>
+
+
+                                    <StackPanel Grid.Column="1" Padding="0,5,5,5">
+                                      
+                                        <Button Click="ShowAllTopAlbumsClicked" Margin="0,0,0,5" HorizontalAlignment="Right" Style="{StaticResource PlainButtonStyle}">
+                                            <TextBlock Text="Show all" Foreground="{StaticResource MusicusOtherColor}" Style="{StaticResource PrimaryTextStyle}" FontSize="13"/>
+                                        </Button>
+
+                                        <ListView x:Name="PopularAlbumsList"
+                                                  HorizontalAlignment="Right"
+                                                  ItemsSource="{Binding SmallTopAlbums}" 
+                                                  ItemContainerStyle="{StaticResource NoMarginListViewItem}"    
+                                                  IsItemClickEnabled="True" 
+                                                  ScrollViewer.HorizontalScrollMode="Enabled"
+                                                  ScrollViewer.VerticalScrollMode="Enabled"
+                                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                  ItemClick="AlbumClicked">
+
+                                            <ListView.ItemTemplateSelector>
+                                                <helpers:DataTemplateHelper AdvertTemplate="{StaticResource AdvertTemplateWithAlbumHeightWrapperPc}"
+                                                                            ListAdvertTemplate="{StaticResource ListAdvertTemplate}"
+                                                                            NormalTemplate="{StaticResource PopularAlbumListTemplateLocal}"/>
+                                            </ListView.ItemTemplateSelector>
+
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+
+                                        </ListView>
+                                    </StackPanel>
+
+                                </Grid>
+
+                                <TextBlock Margin="12,5" Text="New Tracks" Style="{StaticResource HeaderTextStyle}"/>
+
+                                <helpers:EdgeTappedListView x:Name="TrackList" 
+                                                            OddRowBackground="{StaticResource MusicusLowColor}"
+                                                            IsItemLeftEdgeTapEnabled="False"
+                                                            IsItemClickEnabled="True" 
+                                                            ItemsSource="{Binding NewReleases}" 
+                                                            Padding="{StaticResource PcPadding}">
+
+                                    <ListView.ItemTemplateSelector>
+                                        <helpers:DataTemplateHelper AdvertTemplate="{StaticResource AdvertTemplatePc}"
+                                                                    ListAdvertTemplate="{StaticResource ListAdvertTemplate}"
+                                                                    NormalTemplate="{StaticResource ViezSearchTemplate}"/>
+                                    </ListView.ItemTemplateSelector>
+
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:InvokeCommandAction Command="{Binding  SongClickCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </helpers:EdgeTappedListView>
+                       
+                            </StackPanel>
+                            
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+
+
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                      
+                        <!--<Setter Target="AboutTextTextBlock.(Grid.Row)" Value="0" />
+                        <Setter Target="AboutTextTextBlock.(Grid.Column)" Value="1" />-->
+                      
+                        <Setter Target="TopTracksGrid.ColumnDefinitions[1].Width" Value="auto" />
+                        <Setter Target="TopAlbumsGrid.ColumnDefinitions[1].Width" Value="auto" />
+
+                        <Setter Target="TopTracksGrid.Margin" Value="12,10,12,5" />
+                        <Setter Target="TopAlbumsGrid.Margin" Value="12,5,12,5" />
+                    
+                        <Setter Target="NormalTrackStackPanel.Visibility" Value="Visible" />
+                        <Setter Target="CenteredTrackStackPanel.Visibility" Value="Collapsed" />
+
+                        <Setter Target="NormalAlbumStackPanel.Visibility" Value="Visible" />
+                        <Setter Target="CenteredAlbumStackPanel.Visibility" Value="Collapsed" />
+
+
+                        <!--<Setter Target="AboutScrollViewer.(Grid.Row)" Value="0" />
+                        <Setter Target="AboutScrollViewer.(Grid.Column)" Value="2" />
+
+                        <Setter Target="RootGrid.ColumnDefinitions[0].Width" Value="*" />
+                        <Setter Target="RootGrid.ColumnDefinitions[1].Width" Value="40" />
+                        <Setter Target="RootGrid.ColumnDefinitions[2].Width" Value="*" />
+
+                        <Setter Target="RootGrid.RowDefinitions[0].Height" Value="*" />
+                        <Setter Target="RootGrid.RowDefinitions[1].Height" Value="0" />-->
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="TopTracksGrid.ColumnDefinitions[1].Width" Value="0" />
+                        <Setter Target="TopAlbumsGrid.ColumnDefinitions[1].Width" Value="0" />
+
+                        <Setter Target="TopTracksGrid.Margin" Value="12,10,12,5" />
+                        <Setter Target="TopAlbumsGrid.Margin" Value="12,5,12,5" />
+
+                        
+                        <Setter Target="NormalTrackStackPanel.Visibility" Value="Collapsed" />
+                        <Setter Target="CenteredTrackStackPanel.Visibility" Value="Visible" />
+
+                        <Setter Target="NormalAlbumStackPanel.Visibility" Value="Collapsed" />
+                        <Setter Target="CenteredAlbumStackPanel.Visibility" Value="Visible" />
+
+
+                        <!--<Setter Target="AboutTextTextBlock.(Grid.Row)" Value="2" />
+                        <Setter Target="AboutTextTextBlock.(Grid.Column)" Value="0" />-->
+                      
+                      
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+    </Grid>
+</Musicus:PageBase>

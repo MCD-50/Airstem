@@ -1,0 +1,2 @@
+MainPackage=C:\Users\ayush\Downloads\Windows 10 Airstem\Windows 10 Airstem\MusicusUniversalDesktop\MusicusUniversalDesktop\bin\x64\Release\MusicusUniversalDesktop_2017.4.11.0_x64.appx
+SymbolPackage=C:\Users\ayush\Downloads\Windows 10 Airstem\Windows 10 Airstem\MusicusUniversalDesktop\MusicusUniversalDesktop\AppPackages\MusicusUniversalDesktop_2017.4.11.0_Test\MusicusUniversalDesktop_2017.4.11.0_x64.appxsym

@@ -1,0 +1,52 @@
+﻿<Page
+    x:Class="Musicus.AddToPlaylistPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Musicus"
+    xmlns:Musicus="using:Musicus"
+    mc:Ignorable="d"  
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:customTriggers="using:Musicus.Helpers.Triggers">
+
+
+    <Grid Background="Black" Opacity=".9">
+      
+        <Border x:Name="MobileBorder" Visibility="Collapsed" Height="80" VerticalAlignment="Top" Background="#131313"/>
+        
+        <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource PivotHeaderTemplate}">
+            <PivotItem x:Name="MainPivotItem1" Header="CHOOSE TO ADD" Margin="0">
+                <Grid>
+                    <TextBlock x:Name="MessageTextBlock" 
+                               Text="Its empty here, add a playlist first." 
+                               Margin="{StaticResource PcPadding}" 
+                               Style="{StaticResource MessageTextStyle}"/>
+                   
+                    <ListView x:Name="PlaylistsList" 
+                              ItemContainerStyle="{StaticResource NoMarginListViewItem}"           
+                              Padding="{StaticResource PcPadding}" 
+                              ItemClick="playlistitemclick" 
+                              IsItemClickEnabled="True" 
+                              ItemTemplate="{StaticResource AddToPlaylistTemplate}"/>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DeviceFamilyStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <customTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MobileBorder.Visibility" Value="Visible"/>
+                        <Setter Target="PlaylistsList.ItemTemplate" Value="{StaticResource AddToPlaylistTemplateMobile}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        
+    </Grid>
+</Page>

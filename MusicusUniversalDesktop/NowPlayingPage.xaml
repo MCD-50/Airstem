@@ -1,0 +1,305 @@
+﻿<Musicus:PageBase
+    x:Class="Musicus.NowPlayingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Musicus"
+    xmlns:Musicus="using:Musicus"
+    mc:Ignorable="d"
+    xmlns:utilities="using:Musicus.Utilities"
+    xmlns:customTriggers="using:Musicus.Helpers.Triggers" 
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    DataContext="{Binding Player, Source={StaticResource Locator}}">
+  
+    <Grid>
+        <Grid.Resources>
+
+            <DataTemplate x:Name="NowPlayingSimilarListTemplate" x:Key="NowPlayingSimilarListTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Name}" Style="{StaticResource PrimaryTextStyle}"/>
+                    <TextBlock Text="{Binding Artist}" Style="{StaticResource SecondaryTextStyle}" Grid.Column="1" Margin="40,0,0,0"/>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Name="NowPlayingSimilarListTemplateMobile" x:Key="NowPlayingSimilarListTemplateMobile">
+                <StackPanel>
+                    <TextBlock Text="{Binding Name}" Margin="0,0,0,2" Style="{StaticResource PrimaryTextStyle}"/>
+                    <TextBlock Text="{Binding Artist}" Margin="0,0,0,3" Style="{StaticResource SecondaryTextStyleMobile}"/>
+                </StackPanel>
+            </DataTemplate>
+
+            <Storyboard x:Name="MainImageSlideIn">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+                                                   Storyboard.TargetName="BorderImage">
+                    <EasingDoubleKeyFrame x:Name="FromValue" KeyTime="0"/>
+                    <EasingDoubleKeyFrame Value="0" KeyTime="0:0:.45"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+
+            <Storyboard x:Name="ChangeSong">
+                <DoubleAnimation From="0" To="1" x:Name="ChangeSongAnimate" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BorderImage" Duration="0:0:2"/>
+            </Storyboard>
+
+            <Storyboard x:Name="PivotChanged">
+                <DoubleAnimation From="1" To=".5" x:Name="PivotChangedAnimate" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BorderImage" Duration="0:0:.5"/>
+            </Storyboard>
+
+            <Storyboard x:Name="PivotChangedReverse">
+                <DoubleAnimation From=".5" To="1" x:Name="PivotChangedReverseAnimate" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="BorderImage" Duration="0:0:.5"/>
+            </Storyboard>
+
+            <Storyboard x:Name="ShowVid">
+                <DoubleAnimation From="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="VideoToogleButton" Duration="0:0:.5"/>
+            </Storyboard>
+
+            <Storyboard x:Name="HideVid">
+                <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="VideoToogleButton" Duration="0:0:.5"/>
+            </Storyboard>
+
+            <helpers:DataTemplateHelper x:Name="PcSelector" AdvertTemplate="{StaticResource AdvertTemplatePc}"
+                                        ListAdvertTemplate="{StaticResource ListAdvertTemplateForPaidMicrosoftAdsPc}"
+                                        NormalTemplate="{StaticResource NowPlayingSimilarListTemplate}"/>
+
+            <helpers:DataTemplateHelper x:Name="MobileSelector" AdvertTemplate="{StaticResource AdvertTemplateMobile}"
+                                        ListAdvertTemplate="{StaticResource ListAdvertTemplateForPaidMicrosoftAdsMobile}"
+                                        NormalTemplate="{StaticResource NowPlayingSimilarListTemplateMobile}"/>
+            
+        </Grid.Resources>
+
+
+        <Border x:Name="BorderImage">
+            <Border.Background>
+                <ImageBrush x:Name="ArtistImage" Opacity=".35" Stretch="UniformToFill"/>
+            </Border.Background>
+            <Border.RenderTransform>
+                <CompositeTransform x:Name="CompositeTranslate"/>
+            </Border.RenderTransform>
+        </Border>
+
+        <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource PivotHeaderTemplate}" SelectionChanged="NowPlayingPageSelectionChanged">
+            <PivotItem x:Name="MainPivotItem1" Header="PLAYING" Margin="0">
+                <Grid Margin="12,0">
+                    <!--<StackPanel x:Name="ControlButtonInPortrait" VerticalAlignment="Top" HorizontalAlignment="Right">
+                        --><!--<ToggleButton Margin="0,0,-10,0" Background="Transparent" Style="{StaticResource ToggleButtonStyle}" IsChecked="{Binding IsRepeat, Mode=TwoWay}">
+                            <Border Background="{StaticResource SystemControlDisabledBaseLowBrush}" Width="40" Height="40" CornerRadius="40">
+                                <SymbolIcon Symbol="Sync"/>
+                            </Border>
+                        </ToggleButton>
+
+                        <ToggleButton Margin="0,0,-10,0" Background="Transparent" Style="{StaticResource ToggleButtonStyle}" IsChecked="{Binding IsShuffle, Mode=TwoWay}">
+                            <Border Background="{StaticResource SystemControlDisabledBaseLowBrush}" Width="40" Height="40" CornerRadius="40">
+                                <SymbolIcon Symbol="Shuffle"/>
+                            </Border>
+                        </ToggleButton>
+
+                        <ToggleButton x:Name="VideoToogleButton" Visibility="Collapsed" Margin="0,0,-10,0" Click="OpenVideo" Background="Transparent" Style="{StaticResource ToggleButtonStyle}">
+                            <Border x:Name="VideoButton" Background="{StaticResource SystemControlDisabledBaseLowBrush}" Width="40" Height="40" CornerRadius="40">
+                                <SymbolIcon Symbol="Video"/>
+                            </Border>
+                        </ToggleButton>--><!--
+                    </StackPanel>-->
+
+
+
+
+                    <Button Background="Transparent" Margin="0,5" VerticalAlignment="Top" HorizontalAlignment="Left" Click="OpenQueue" Style="{StaticResource PlainButtonStyle}">
+                        <Border Background="{StaticResource SystemControlDisabledBaseLowBrush}" Width="40" Height="40" CornerRadius="40">
+                            <SymbolIcon Symbol="More"/>
+                        </Border>
+                    </Button>
+
+                    <Button x:Name="VideoToogleButton" Background="Transparent" Margin="0,5" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OpenVideo" Style="{StaticResource PlainButtonStyle}">
+                       <Border Background="{StaticResource SystemControlDisabledBaseLowBrush}" Width="40" Height="40" CornerRadius="40">
+                            <SymbolIcon Symbol="Video"/>
+                        </Border>
+                    </Button>
+
+
+                    <Grid VerticalAlignment="Bottom" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Button Margin="0,5,0,10" Click="ShowFlyout" 
+                                Style="{StaticResource PlainButtonStyle}">
+                            <Grid x:Name="PlayTrackStackPanel">
+
+                                <FlyoutBase.AttachedFlyout>
+                                    <MenuFlyout>
+
+                                        <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                                        Text="Download" 
+                                                        Click="DownloadFlyoutClicked" 
+                                                        Visibility="{Binding CurrentSong.SongState, Converter={StaticResource DownLoadListedSongStateConverter}}"/>
+
+                                        <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                                        Text="Cancel" 
+                                                        Click="CancelFlyoutClicked" 
+                                                        Visibility="{Binding CurrentSong.SongState, Converter={StaticResource DownloadingSongStateConverter}}"/>
+
+                                        <MenuFlyoutSubItem Text="Add to">
+                                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                                            Text="Playlist" Click="AddToPlaylistFlyoutClick"/>
+                                        </MenuFlyoutSubItem>
+
+                                        <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                                        Text="Discover artist" 
+                                                        Click="DiscoverFlyoutClicked" />
+                                    </MenuFlyout>
+                                </FlyoutBase.AttachedFlyout>
+
+
+
+                                <StackPanel VerticalAlignment="Bottom" Grid.Column="1" >
+
+                                    <TextBlock Text="{Binding CurrentSong.Name}" 
+                                               Margin="0,0,0,3" 
+                                               Style="{StaticResource PrimaryTextStyle}"/>
+
+                                    <StackPanel Orientation="Horizontal">
+
+                                        <TextBlock Text="{Binding CurrentSong.ArtistName}" Style="{StaticResource SecondaryTextStyleMobile}"/>
+                                        <Border Width="3" CornerRadius="3" Height="3" Margin="5,1,5,0" Background="Gray" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding CurrentSong.Album.Name}" Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                    </StackPanel>
+                                </StackPanel>
+
+                            </Grid>
+                        </Button>
+
+
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid HorizontalAlignment="Left" Background="{StaticResource MusicusOtherColor}" CornerRadius="2" Padding="5">
+                                <TextBlock Text="{Binding Position, Converter={StaticResource TimespanToStringConverter}}" Style="{StaticResource PrimaryTextStyle}" FontSize="11"/>
+                            </Grid>
+
+
+                            <Grid HorizontalAlignment="Right" Background="{StaticResource MusicusOtherColor}" CornerRadius="2" Padding="5">
+                                <TextBlock Text="{Binding Duration, Converter={StaticResource TimespanToStringConverter}}" Style="{StaticResource PrimaryTextStyle}" FontSize="11"/>
+                            </Grid>
+
+                          
+                            <Slider Grid.Row="1" Value="{Binding Position, Converter={StaticResource TimespanToDoubleConverter}, Mode=TwoWay}"
+                                    IsEnabled="{Binding IsLoading, Converter={StaticResource BoolToOppositeConverter}}"
+                                    Maximum="{Binding Duration, Converter={StaticResource TimespanToDoubleConverter}, Mode=TwoWay}"
+                                    ManipulationMode="TranslateX" ManipulationStarted="Slider_ManipulationStarted" ManipulationCompleted="Slider_ManipulationCompleted" 
+                                    ValueChanged="Slider_ValueChanged"/>
+                        </Grid>
+
+
+                        <StackPanel Grid.Row="2" Margin="0,5,0,10" Orientation="Horizontal">
+
+                            <Button Click="PrevButtonClick"  Style="{StaticResource PlainButtonStyle}">
+                                <SymbolIcon Symbol="Previous"/>
+                            </Button>
+
+                            <Button Margin="30,0" Click="PlayPasueButtonClick"  Style="{StaticResource PlainButtonStyle}">
+                                <SymbolIcon Symbol="{Binding PlayPauseIcon}"/>
+                            </Button>
+
+                            <Button Click="NextButtonClick" Style="{StaticResource PlainButtonStyle}">
+                                <SymbolIcon Symbol="Next" />
+                            </Button>
+
+                            <ToggleButton Margin="30,0" Background="Transparent" Style="{StaticResource ToggleButtonStyle}" IsChecked="{Binding IsRepeat, Mode=TwoWay}">
+                                <SymbolIcon Symbol="Rotate"/>
+                            </ToggleButton>
+
+                            <ToggleButton Background="Transparent" Style="{StaticResource ToggleButtonStyle}" IsChecked="{Binding IsShuffle, Mode=TwoWay}">
+                                <SymbolIcon Symbol="Shuffle"/>
+                            </ToggleButton>
+
+                           
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+
+
+            <PivotItem x:Name="MainPivotItem2" Header="SIMILAR" Margin="0">
+                <ScrollViewer>
+                    <StackPanel>
+                        <TextBlock Margin="{StaticResource PcPadding}" 
+                                   Text="{Binding NowPlaying.Message}" 
+                                   Visibility="{Binding NowPlaying.Message,Converter={StaticResource EmptyVisibilityConverter}}" 
+                                   Style="{StaticResource MessageTextStyle}"/>
+
+                        <Grid Visibility="{Binding NowPlaying.IsLoading, Converter={StaticResource ReverseVisibilityConverter}}">
+                            <StackPanel Visibility="{Binding NowPlaying.Message,Converter={StaticResource ReverseEmptyVisibilityConverter}}">
+
+
+                                <helpers:EdgeTappedListView x:Name="SimilarTrackList" 
+                                         OddRowBackground="{StaticResource MusicusLowColor}"
+                                         IsItemLeftEdgeTapEnabled="False" 
+                                         ItemsSource="{Binding NowPlaying.SimilarTracks}" 
+                                         Padding="{StaticResource PcPadding}" 
+                                         IsItemClickEnabled="True"
+                                         Visibility="{Binding NowPlaying.SimilarTrackVisible, Converter={StaticResource VisibilityConverter}}"
+                                         ItemTemplateSelector="{StaticResource PcSelector}">
+
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:InvokeCommandAction Command="{Binding NowPlaying.SongClickRelayCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </helpers:EdgeTappedListView>
+
+                                <ListView x:Name="SimilarArtistList" 
+                                          ItemsSource="{Binding NowPlaying.SimilarArtists}" 
+                                          Padding="{StaticResource PcPadding}" 
+                                          ItemContainerStyle="{StaticResource NoMarginListViewItem}"           
+                                          IsItemClickEnabled="True"  
+                                          Visibility="{Binding NowPlaying.SimilarArtistVisible, Converter={StaticResource VisibilityConverter}}"
+                                          ItemTemplate="{StaticResource NowPlayingSimilarArtistsTemplate}" 
+                                          ItemClick="SimilarArtistsClick"/>
+
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+
+            <PivotItem x:Name="MainPivotItem3" Header="LYRICS" Margin="0">
+                <ScrollViewer>
+                    <TextBlock x:Name="LyricsTextBlock" Margin="{StaticResource PcPadding}" Text="Loading data, please wait..." TextWrapping="Wrap" Style="{StaticResource MessageTextStyle}"/>
+                </ScrollViewer>
+            </PivotItem>
+
+        </Pivot>
+
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DeviceFamilyStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <customTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BorderImage.Margin" Value="0,80,0,0"/>
+                        <Setter Target="SimilarTrackList.ItemTemplateSelector" Value="{StaticResource MobileSelector}"/>
+                        <Setter Target="SimilarArtistList.ItemTemplate" Value="{StaticResource NowPlayingSimilarArtistsTemplateMobile}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+
+    </Grid>
+
+</Musicus:PageBase>

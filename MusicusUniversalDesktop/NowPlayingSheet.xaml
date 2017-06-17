@@ -1,0 +1,114 @@
+﻿<Page
+    x:Class="Musicus.NowPlayingSheet"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Musicus"
+    xmlns:Musicus="using:Musicus"
+    mc:Ignorable="d"
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"   
+    xmlns:customTriggers="using:Musicus.Helpers.Triggers"
+    xmlns:utilities="using:Musicus.Utilities"
+    DataContext="{Binding Player, Source={StaticResource Locator}}">
+
+    
+    <Grid Background="Black" Opacity=".9">
+        <Grid.Resources>
+            <DataTemplate x:Key="QueueTemplate" x:Name="QueueTemplate">
+                <Grid Padding="5">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="RightTapped">
+                            <utilities:ShowFlyoutAction/>
+                        </core:EventTriggerBehavior>
+                        <core:EventTriggerBehavior EventName="Holding">
+                            <utilities:ShowFlyoutAction/>
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                            Text="Remove" Click="RemoveFlyoutClicked" />
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Background="#131313">
+                        <Image Source="{Binding Song.Album.Artwork.Uri}" Height="130" Width="130" Stretch="UniformToFill"/>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                        <TextBlock Text="{Binding Song.Name, Converter={StaticResource FirstLetterUpperCaseCoverter}}" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" />
+                        <TextBlock Text="{Binding Song.ArtistName, Converter={StaticResource FirstLetterUpperCaseCoverter}}" Margin="0,2,0,0" Style="{StaticResource SecondaryTextStyle}" />
+                    </StackPanel>
+         
+                </Grid>
+            </DataTemplate>
+
+            
+            <DataTemplate x:Key="QueueTemplateMobile" x:Name="QueueTemplateMobile">
+                <Grid>
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="RightTapped">
+                            <utilities:ShowFlyoutAction/>
+                        </core:EventTriggerBehavior>
+                        <core:EventTriggerBehavior EventName="Holding">
+                            <utilities:ShowFlyoutAction/>
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+
+                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                            Text="Remove" Click="RemoveFlyoutClicked" />
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                    
+                    <StackPanel>
+                        <TextBlock Text="{Binding Song.Name}" Style="{StaticResource PrimaryTextStyle}" Margin="0,0,0,2"/>
+                        <TextBlock Text="{Binding Song.ArtistName}" Style="{StaticResource SecondaryTextStyleMobile}" Margin="0,0,0,5"/>
+                    </StackPanel>
+
+                </Grid>
+            </DataTemplate>
+            
+        </Grid.Resources>
+
+        <Border x:Name="MobileBorder" Visibility="Collapsed" Height="80" VerticalAlignment="Top" Background="#131313"/>
+
+        <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource PivotHeaderTemplate}">
+            <PivotItem x:Name="MainPivotItem1" Header="QUEUE" Margin="0">
+
+                <ListView x:Name="CurrentQueueView" 
+                          Padding="{StaticResource PcPadding}"
+                          ItemsSource="{Binding CollectionService.CurrentPlaybackQueue}" 
+                          ItemContainerStyle="{StaticResource NowPlayingQueueStyle}" 
+                          SelectionChanged="CurrentQueueView_SelectionChanged"
+                          ItemTemplate="{StaticResource QueueTemplate}"/>
+                
+            </PivotItem>
+        </Pivot>
+
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DeviceFamilyStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <customTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CurrentQueueView.ItemTemplate" Value="{StaticResource QueueTemplateMobile}"/>
+                        <Setter Target="MobileBorder.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+    </Grid>
+</Page>

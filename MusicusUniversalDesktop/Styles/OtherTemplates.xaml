@@ -1,0 +1,295 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:UI="using:Microsoft.Advertising.WinRT.UI">
+
+    <!-- styles -->
+
+    <Style TargetType="TextBlock" x:Key="DashboardTextStyle" x:Name="DashboardTextStyle">
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="HeaderTextStyle" x:Name="HeaderTextStyle">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="OptionTextStyle" x:Name="OptionTextStyle">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+    <Style TargetType="HyperlinkButton" x:Key="HyperlinkButtonStyle" x:Name="HyperlinkButtonStyle">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+
+
+    <Style TargetType="TextBlock" x:Key="MessageTextStyle" x:Name="MessageTextStyle">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Opacity" Value=".7"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+
+    <Style TargetType="TextBlock" x:Key="PrimaryTextStyle" x:Name="PrimaryTextStyle">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+
+    <Style TargetType="ProgressBar" x:Name="ProgressBarStyle">
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="Foreground" Value="DodgerBlue"/>
+    </Style>
+
+
+    <Style TargetType="TextBlock" x:Key="SecondaryTextStyle" x:Name="SecondaryTextStyle">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Foreground" Value="Gray"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="SecondaryTextStyleMobile" x:Name="SecondaryTextStyleMobile">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Opacity" Value=".5"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="#333333"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+    </Style>
+
+
+    <Style TargetType="TextBlock" x:Key="PivotItemHeaderTextStyle" x:Name="PivotItemHeaderTextStyle">
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+
+    <Style TargetType="MenuFlyoutItem" x:Key="MenuFlyoutItemStyle" x:Name="MenuFlyoutItemStyle">
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <!-- templates -->
+
+    <DataTemplate x:Key="LostGridHeaderTemplate">
+        <StackPanel Margin="0,5,0,5">
+            <TextBlock Text="{Binding}" Style="{StaticResource PrimaryTextStyle}" FontWeight="Bold" Foreground="{StaticResource MusicusOtherColor}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    
+    <DataTemplate x:Key="ToogleSwitchTemplate">
+        <TextBlock Text="{Binding}" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+    </DataTemplate>
+
+
+   
+    
+  
+    <!-- adduplex ads -->
+
+    <DataTemplate x:Name="ListAdvertTemplate">
+        <Grid Background="#131313">
+            <UI:AdControl ApplicationId="5531ebaa-50fb-4c24-978a-cc97a1323a05" AdUnitId="11644931" Height="50" Width="320"/>
+            <!--<adduplex:AdControl AdUnitId="199207" AppKey="fdf6edc8-432b-46e5-b916-0b1255d368c3" />-->
+        </Grid>
+    </DataTemplate>
+    
+    <!-- addeals ad -->
+
+    <!-- download addeals sdk before -->
+    <!--<DataTemplate x:Name="ListAdvertTemplateForAdDealsForMobile">
+        <Grid Background="#131313">
+            <addeals:AdDealsBannerAd  AdType="BANNER_WINDOWS_PHONE_320x50"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Name="ListAdvertTemplateForAdDealsForPc">
+        <Grid Background="#131313">
+            <addeals:AdDealsBannerAd  AdType="LEADERBOARD_WINDOWS_TABLET_PC_728x90"/>
+        </Grid>
+    </DataTemplate>-->
+    
+    
+    
+
+    <!-- available size of microsoft ads
+         W-> H    300*50 320*50 300*250 300*600 480*80 640*100 728*90-->
+    
+    
+    <!-- microsoft ads -->
+
+    <DataTemplate x:Name="NoMarginAdvertTemplateMobile">
+        <Grid Background="#131313" Height="{Binding ExactHeight, Source={StaticResource WidthConverter}}" Width="{Binding ExactWidth, Source={StaticResource WidthConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Grid Width="{Binding ExactWidth, Source={StaticResource WidthConverter}}" 
+                  Height="{Binding ExactWidth, Source={StaticResource WidthConverter}}">
+                <UI:AdControl ApplicationId="5531ebaa-50fb-4c24-978a-cc97a1323a05"  AdUnitId="11644931" Height="250" Width="300"/>
+            </Grid>
+
+
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10" Grid.Row="1">
+                <TextBlock Text="Advertisement" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" FontSize="14"/>
+                <TextBlock Text="Click to see" Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}" FontSize="11"/>
+            </StackPanel>
+
+        </Grid>
+    </DataTemplate>
+
+    
+    <DataTemplate x:Name="AdvertTemplateMobile">
+        <Grid Background="#131313" Margin="0,0,5,0" Height="{Binding ExactHeight, Source={StaticResource WidthConverter}}" Width="{Binding ExactWidth, Source={StaticResource WidthConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Grid Width="{Binding ExactWidth, Source={StaticResource WidthConverter}}" 
+                  Height="{Binding ExactWidth, Source={StaticResource WidthConverter}}">
+                <UI:AdControl ApplicationId="5531ebaa-50fb-4c24-978a-cc97a1323a05" AdUnitId="11644931" Height="250" Width="300"/>
+            </Grid>
+
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10" Grid.Row="1">
+                <TextBlock Text="Advertisement" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" FontSize="14"/>
+                <TextBlock Text="Click to see" Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}" FontSize="11"/>
+            </StackPanel>
+
+        </Grid>
+    </DataTemplate>
+
+
+    <DataTemplate x:Name="NoMarginAdvertTemplatePc">
+        <Grid Background="#131313" Height="{Binding ExactHeight, Source={StaticResource WidthConverter}}" Width="{Binding ExactWidth, Source={StaticResource WidthConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Grid Width="{Binding ExactWidth, Source={StaticResource WidthConverter}}" 
+                  Height="{Binding ExactWidth, Source={StaticResource WidthConverter}}">
+                <UI:AdControl ApplicationId="b61b958c-ae80-40d0-96b1-c4565e97a849"  AdUnitId="11644930" Height="250" Width="300"/>
+            </Grid>
+
+
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10" Grid.Row="1">
+                <TextBlock Text="Advertisement" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" FontSize="14"/>
+                <TextBlock Text="Click to see" Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}" FontSize="11"/>
+            </StackPanel>
+
+        </Grid>
+    </DataTemplate>
+
+
+    <DataTemplate x:Name="AdvertTemplatePc">
+        <Grid Background="#131313" Margin="0,0,5,0" Height="{Binding ExactHeight, Source={StaticResource WidthConverter}}" Width="{Binding ExactWidth, Source={StaticResource WidthConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Grid Width="{Binding ExactWidth, Source={StaticResource WidthConverter}}" 
+                  Height="{Binding ExactWidth, Source={StaticResource WidthConverter}}">
+                <UI:AdControl ApplicationId="b61b958c-ae80-40d0-96b1-c4565e97a849" AdUnitId="11644930" Height="250" Width="300"/>
+            </Grid>
+
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10" Grid.Row="1">
+                <TextBlock Text="Advertisement" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" FontSize="14"/>
+                <TextBlock Text="Click to see" Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}" FontSize="11"/>
+            </StackPanel>
+
+        </Grid>
+    </DataTemplate>
+
+
+    <DataTemplate x:Name="VideoTemplateForPaidMicrosoftAdPc">
+        <Grid Background="#131313" Height="{Binding OnlineWidth, Source={StaticResource WidthConverter}}" Width="{Binding OnlineWidth, Source={StaticResource WidthConverter}}">
+            <UI:AdControl ApplicationId="b61b958c-ae80-40d0-96b1-c4565e97a849" AdUnitId="11644930" Height="250" Width="300"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Name="VideoTemplateForPaidMicrosoftAdMobile">
+        <Grid Background="#131313" Height="{Binding OnlineWidth, Source={StaticResource WidthConverter}}" Width="{Binding OnlineWidth, Source={StaticResource WidthConverter}}">
+            <UI:AdControl ApplicationId="5531ebaa-50fb-4c24-978a-cc97a1323a05" AdUnitId="11644931" Height="250" Width="300"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Name="AdvertTemplateWithAlbumHeightWrapperPc">
+        <Grid Background="#131313" Height="{Binding AlbumHeight, Source={StaticResource WidthConverter}}" Width="{Binding VideoWidth, Source={StaticResource WidthConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Grid Width="{Binding VideoWidth, Source={StaticResource WidthConverter}}" 
+                  Height="{Binding VideoWidth, Source={StaticResource WidthConverter}}">
+                <UI:AdControl ApplicationId="b61b958c-ae80-40d0-96b1-c4565e97a849"  AdUnitId="11644930" Height="250" Width="300"/>
+            </Grid>
+
+
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10" Grid.Row="1">
+                <TextBlock Text="Advertisement" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" FontSize="14"/>
+                <TextBlock Text="Click to see" Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}" FontSize="11"/>
+            </StackPanel>
+
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Name="ListAdvertTemplateForPaidMicrosoftAdsMobile">
+        <Grid Background="#131313">
+            <UI:AdControl ApplicationId="5531ebaa-50fb-4c24-978a-cc97a1323a05" AdUnitId="11644931" Height="50" Width="320"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Name="ListAdvertTemplateForPaidMicrosoftAdsPc">
+        <Grid Background="#131313">
+            <UI:AdControl ApplicationId="b61b958c-ae80-40d0-96b1-c4565e97a849"  AdUnitId="11644930" Height="90" Width="728"/>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

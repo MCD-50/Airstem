@@ -1,0 +1,150 @@
+﻿<Musicus:PageBase
+    x:Class="Musicus.CollectionArtistPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Musicus="using:Musicus"  
+    mc:Ignorable="d"  
+    xmlns:local="using:Musicus"
+   
+    xmlns:utilities="using:Musicus.Utilities"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:helpers="using:Musicus.Helpers"
+    x:Name="Page" 
+    DataContext="{Binding Source={StaticResource Locator}, Path=CollectionArtist}">
+  
+    <Grid>
+        <Grid.Resources>
+            <Storyboard x:Name="FadeInAnimation">
+                <DoubleAnimation Storyboard.TargetName="BackgroundImage" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"/>
+            </Storyboard>
+        </Grid.Resources>
+
+        <Grid x:Name="BackgroundImage" Opacity="0" Height="330" VerticalAlignment="Top">
+            <Grid.Background>
+                <ImageBrush utilities:BlurImageTool.Source="{Binding Artist.SmallArtwork.Uri}" utilities:BlurImageTool.BlurPercent="151" Stretch="UniformToFill" Opacity=".35"/>
+            </Grid.Background>
+        </Grid>
+
+        <Pivot HeaderTemplate="{StaticResource PivotHeaderTemplate}" x:Name="Pivot">
+            <PivotItem Header="ARTIST" Margin="0">
+                <ScrollViewer>
+                    <StackPanel>
+                        <Grid Margin="12,5" HorizontalAlignment="Left">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Border Background="#131313" Width="220" Height="220" CornerRadius="220">
+                                <Border Width="220" Height="220" CornerRadius="220">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="{Binding Artist.Artwork.Uri}" Stretch="UniformToFill"/>
+                                    </Border.Background>
+                                </Border>
+                            </Border>
+
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                              
+                                <TextBlock VerticalAlignment="Center" Style="{StaticResource PrimaryTextStyle}">                 
+                                    <Run Text="{Binding Artist.Name}"/><LineBreak/>    
+                                    <Run Text="{Binding Artist.Songs.Count}" Foreground="Gray" FontSize="11"/>            
+                                    <Run Text="{Binding Artist.Songs.Count, Converter={StaticResource SongToPluralConverter}}" Foreground="Gray" FontSize="11"/>
+                                </TextBlock>
+
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Click="PlayAll" Style="{StaticResource PlainButtonStyle}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <SymbolIcon Symbol="Play" RenderTransformOrigin="0,.5">
+                                                <SymbolIcon.RenderTransform>
+                                                    <CompositeTransform ScaleX=".8" ScaleY=".8"/>
+                                                </SymbolIcon.RenderTransform>
+                                            </SymbolIcon>
+                                            <TextBlock Margin="5,0,5,1" Text="Play all" FontSize="14" 
+                                                       VerticalAlignment="Center" Style="{StaticResource PrimaryTextStyle}"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Border Width="3" Grid.Column="1" 
+                                            CornerRadius="3" 
+                                            Height="3" 
+                                            Margin="0,3" 
+                                            Background="Gray" 
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center" />
+
+                                    <Button Grid.Column="2" Margin="5,0,0,0" Style="{StaticResource PlainButtonStyle}" Click="AddAll">
+                                        <SymbolIcon Symbol="Add" RenderTransformOrigin=".5,.5">
+                                            <SymbolIcon.RenderTransform>
+                                                <CompositeTransform ScaleX=".8" ScaleY=".8"/>
+                                            </SymbolIcon.RenderTransform>
+                                        </SymbolIcon>
+                                    </Button>
+                                </Grid>
+
+                            </StackPanel>
+                        </Grid>
+
+
+                        <Grid Margin="12,0,12,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Foreground="Gray" Text="Track View" FontWeight="Light" Style="{StaticResource PrimaryTextStyle}"/>
+                            <ToggleSwitch Grid.Column="1" Foreground="Gray" IsOn="{Binding SettingViewModel.TrackView, Mode=TwoWay}"/>
+                        </Grid>
+
+
+                        <Grid Margin="0,10,0,0">
+                           
+                            <Border Background="Black" />
+                           
+                            <helpers:EdgeTappedListView x:Name="SongList"
+                                                    IsItemLeftEdgeTapEnabled="False"       
+                                                    OddRowBackground="{StaticResource MusicusLowColor}"
+                                                    SelectionMode="None"
+                                                    IsItemClickEnabled="True" 
+                                                    Visibility="{Binding SettingViewModel.TrackView,Converter={StaticResource VisibilityConverter}}"
+                                                    ContainerContentChanging="ItemListView_ContainerContentChanging" 
+                                                    Padding="{StaticResource PcPadding}" 
+                                                    ItemsSource="{Binding Artist.Songs}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Musicus:SongViewer/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="ItemClick">
+                                        <core:InvokeCommandAction Command="{Binding SongClickRelayCommand}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </helpers:EdgeTappedListView>
+  
+                            <GridView ItemsSource="{Binding Artist.Albums}" 
+                                      Padding="{StaticResource PcPadding}" 
+                                      Visibility="{Binding SettingViewModel.TrackView,Converter={StaticResource ReverseVisibilityConverter}}"
+                                      IsItemClickEnabled="True" 
+                                      ItemClick="AlbumClick" 
+                                      ItemTemplate="{StaticResource CollectionArtistAlbumTemplate}"/>
+
+                        </Grid>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+
+      
+    </Grid>
+</Musicus:PageBase>

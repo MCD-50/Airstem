@@ -1,0 +1,675 @@
+﻿<Musicus:PageBase
+    x:Class="Musicus.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Musicus"
+    xmlns:Musicus="using:Musicus"
+    mc:Ignorable="d"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    x:Name="Page"
+    xmlns:converters="using:Musicus.Core.Converters"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:utilities="using:Musicus.Utilities"
+    xmlns:customTriggers="using:Musicus.Helpers.Triggers"
+    DataContext="{Binding Setting, Source={StaticResource Locator}}">
+
+    <Grid>
+        <Grid.Resources>
+            <converters:BoolToStringConverter x:Key="IsLoggedInConverter" TrueContent="Logout" FalseContent="Login"/>
+        </Grid.Resources>
+
+        <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource PivotHeaderTemplate}">
+            <PivotItem x:Name="MainPivotItem1" Header="PERSONALIZE" Margin="0">
+                <ScrollViewer>
+                    <StackPanel x:Name="OnePanel" Margin="12,0">
+                        <StackPanel>
+
+                            <StackPanel Margin="0,5">
+
+                                <TextBlock Text="First time its here. Turbo mode ensures reduced opening, resuming and cold start playback time by killing few processes. Please turn off this feature if u face any problem." 
+                                           TextWrapping="Wrap" Margin="0,10,0,5" 
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <ToggleSwitch Header="Enable Turbo Mode" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="{Binding TurboMode, Mode=TwoWay}"/>
+
+                            </StackPanel>
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                            <StackPanel x:Name="IconButtons" Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Left">
+
+                                <Button Click="ViewAddedFolderClick" Margin="0,0,30,0" Style="{StaticResource PlainButtonStyle}">
+                                    <SymbolIcon Symbol="Highlight"/>
+                                </Button>
+
+                                <Button Click="AddNewFolderClicked" Style="{StaticResource PlainButtonStyle}">
+                                    <SymbolIcon Symbol="Add"/>
+                                </Button>
+
+                            </StackPanel>
+
+
+                            <StackPanel Margin="0,5">
+                                <TextBlock Text="Build your collection from your local files. Make sure all your files are in music folder or video folder of sd card/device. You can add folders by tapping add button above." 
+                                           Margin="0,10,0,5"
+                                           TextWrapping="Wrap"
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <Button Click="ImportSongs" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Import music" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+                             
+                        
+                                <Button Click="ImportVideos" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Import videos" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+                            
+                            </StackPanel>
+
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+
+                            <StackPanel Margin="0,5">
+
+                                <ToggleSwitch x:Name="BackgroundToggleSwitch" 
+                                              Margin="0,5" 
+                                              Header="Home Page Background" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="{Binding Background, Mode=TwoWay}"/>
+
+                                <ToggleSwitch Margin="0,5" 
+                                              Header="Play HQ Videos" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="{Binding HdVideoOnOff, Mode=TwoWay}"/>
+
+
+                                <TextBlock Text="Notifies you when new track is downloaded." 
+                                           TextWrapping="Wrap"
+                                           Margin="0,10,0,5" 
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <ToggleSwitch Header="Downloads Notification" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="{Binding Notification, Mode=TwoWay}"/>
+
+
+                                <TextBlock Text="Turning this on will help to get the lyrics offline and you can access lyrics easily." 
+                                           TextWrapping="Wrap"
+                                           Margin="0,10,0,5" 
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <ToggleSwitch Header="Automatically Save Lyrics" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="{Binding LyricsOnOrOff, Mode=TwoWay}"/>
+
+                                <TextBlock Text="Turning this on will show videos in search result." 
+                                           TextWrapping="Wrap" Margin="0,10,0,5"  Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <ToggleSwitch Header="Include Videos In Search" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="{Binding VideoOnOff, Mode=TwoWay}"/>
+
+                            </StackPanel>
+
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+
+                            <StackPanel Margin="0,5">
+                                <StackPanel Tapped="ColorChangeClicked" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5">
+                                    <TextBlock Text="Change look and feel of the app. Tap on color to change the theme." TextWrapping="Wrap" Style="{StaticResource SecondaryTextStyleMobile}"/>
+                                    <Border Margin="0,5" HorizontalAlignment="Left" Background="{StaticResource MusicusOtherColor}" Width="70" Height="20" CornerRadius="2"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,5">
+                                <TextBlock TextWrapping="Wrap"
+                                           Margin="0,5"  
+                                           Style="{StaticResource SecondaryTextStyleMobile}">
+                                    <Run Text="Something is wrong, well you can fix it."/>
+                                    <LineBreak/>
+                                    <Run Text="This will delete everything and import your music again."/>
+                                </TextBlock>
+                             
+                                <Button Click="RepairMusicus" Margin="0,5,0,10" Style="{StaticResource PlainButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                               Text="Refresh airstem" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                               Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+                               
+                           
+                                <TextBlock Text="Fetching artwork from spotify is faster and is recommended for better artwork sync." TextWrapping="Wrap" Margin="0,5" Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <ToggleSwitch Margin="0,5,0,0" Header="Use Spotify To Fetch Artworks" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="{Binding SpotifyArtworkSync, Mode=TwoWay}"/>
+
+
+                                <Button Click="ArtistArtworkSync" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                               Text="Download missing artworks" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                               Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+                                
+                          
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+
+
+            <PivotItem x:Name="MainPivotItem2" Header="ABOUT" Margin="0">
+                <ScrollViewer>
+                    <StackPanel x:Name="TwoPanel" Margin="12,0">
+                        <StackPanel>
+
+                            <Button Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Background="{StaticResource MusicusOtherColor}">
+                                        <Grid Width="100" Height="100">
+                                            <Grid.Background>
+                                                <ImageBrush ImageSource="ms-appx:///Assets/PcAppIcon/300300.png" Stretch="UniformToFill"/>
+                                            </Grid.Background>
+                                        </Grid>
+                                    </Grid>
+
+                                    <StackPanel Grid.Column="1" Margin="10,0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                        <TextBlock TextWrapping="Wrap" 
+                                                   Style="{StaticResource PrimaryTextStyle}" 
+                                                   Text="Airstem"/>
+
+                                        <TextBlock Margin="0,5,0,0" 
+                                                   TextWrapping="Wrap" 
+                                                   Style="{StaticResource OptionTextStyle}" 
+                                                   Text="Version - 2.0"/>
+
+                                        <Button Click="ChangeLogClick" Margin="0,5,0,0" Style="{StaticResource PlainButtonStyle}">
+                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                                       Text="Change Log" Foreground="{StaticResource MusicusOtherColor}" 
+                                                       Style="{StaticResource OptionTextStyle}"/>
+                                        </Button>
+
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+
+                           
+                            
+                            <TextBlock Margin="0,5" HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource SecondaryTextStyleMobile}" >
+                                <Run Text="Explore the world of music with the airstem."/><LineBreak/>
+                                <Run Text="A music search and match engine for music discovery."/><LineBreak/>
+                                <Run Text="Enjoy music with a modern music player and downloader."/>
+                            </TextBlock>
+
+
+                            <Button Click="AirstemClick" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Airstem.tk" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                            </Button>
+
+                            <TextBlock Text="Support development of airstem for windows. Paypal us any amount that is affordable for you." TextWrapping="Wrap" Margin="0,5" HorizontalAlignment="Left" 
+                                       Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                            <Button Click="SendPayPal" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Paypal airstem" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                            </Button>
+
+
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                            <TextBlock Text="Download Airflow for android and play music based on your mood." TextWrapping="Wrap" Margin="0,5" HorizontalAlignment="Left" 
+                                       Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                            <Button Click="DownloadAirflow" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Download airflow" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                            </Button>
+                            
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                            
+
+                            
+                            <StackPanel Margin="0,5">
+
+                                <TextBlock Text="Loving airstem, don't forget to share and rate 5 star." 
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,5"
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <Button Click="ShareMusicus" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Share this app" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+
+                                <Button Click="RateClick" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Rate and review" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+                                
+                            </StackPanel>
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                            <StackPanel Margin="0,5">
+
+                                <TextBlock Text="Get social follow on twitter and intagram." 
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,5"
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Button Click="TwitterClick" Margin="0,0,10,0" Style="{StaticResource PlainButtonStyle}">
+                                        <Grid Background="{StaticResource MusicusOtherColor}">
+                                            <Image Height="50" Width="50" Source="/Assets/PcAppIcon/Twitter.png" Stretch="UniformToFill"/>
+                                        </Grid>
+                                    </Button>
+
+                                    <Button Click="InstagramClick" Style="{StaticResource PlainButtonStyle}">
+                                        <Grid Background="{StaticResource MusicusOtherColor}">
+                                            <Image Height="50" Width="50" Source="/Assets/PcAppIcon/Instagram.png" Stretch="UniformToFill"/>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+
+
+                                <TextBlock Text="Ask a question or suggest a feature by sending us an e-mail. We will reach to you asap." 
+                                           TextWrapping="Wrap"
+                                           Margin="0,10,0,0"
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <Button Click="ContactClick" BorderThickness="0" Background="#222222" Padding="10,5" Margin="0,5">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="airstemapp@gmail.com" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+
+                            </StackPanel>
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                            <StackPanel Margin="0,5">
+
+                                <ToggleSwitch Margin="0,5"
+                                              Header="Accept Privacy Policy" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="True" 
+                                              IsEnabled="False"/>
+
+                                <Button Click="PrivacyClick" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Privacy policy" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+
+                                <Button Click="HelpClick" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                           Text="Help and more" FontSize="15" Foreground="{StaticResource MusicusOtherColor}" 
+                                           Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+
+                       
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+
+        
+    </Grid>
+
+    <!--<ScrollViewer Margin="12">
+        <Grid Margin="0,0,10,0" x:Name="RootGrid">
+            <Grid.Resources>
+                <converters:BoolToStringConverter x:Key="IsLoggedInConverter" TrueContent="Logout" FalseContent="Login"/>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+               <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <StackPanel Margin="0,0,0,15">
+                <TextBlock Text="SETTINGS" 
+                           Style="{StaticResource PivotItemHeaderTextStyle}" 
+                           Foreground="{StaticResource MusicusOtherColor}"
+                           VerticalAlignment="Top"
+                           Margin="0,0,0,10"
+                           HorizontalAlignment="Left"/>
+
+                <ScrollViewer>
+                    <StackPanel Margin="0,0,10,0">
+                        <Button Margin="0,5" Command="{Binding LoginClickRelay}" Style="{StaticResource PlainButtonStyle}">
+                            <Grid HorizontalAlignment="Stretch" Height="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                               Text="{Binding Username,Converter={StaticResource UpperCaseConverter}}" 
+                                               Style="{StaticResource PrimaryTextStyle}" 
+                                               FontWeight="Bold" 
+                                               Foreground="{StaticResource MusicusOtherColor}"/>
+                                <FontIcon FontSize="25" Grid.Column="1" FontFamily="Segoe MDL2 Assets" Glyph="{Binding Glyph}" />
+                            </Grid>
+                        </Button>
+
+                        <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                        <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                            <Button Click="ViewAddedFolderClick" Margin="30,0" Style="{StaticResource PlainButtonStyle}">
+                                <SymbolIcon Symbol="Highlight"/>
+                            </Button>
+
+                            <Button Click="AddNewFolderClicked" Style="{StaticResource PlainButtonStyle}">
+                                <SymbolIcon Symbol="Add"/>
+                            </Button>
+
+                        </StackPanel>
+
+
+                        <StackPanel Margin="0,5">
+                            <TextBlock Text="Build your collection from your local files, get them all at single place and enjoy limitless hours." 
+                                           Margin="0,10,0,5"
+                                           TextWrapping="Wrap"
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                            <Button Click="ImportSongs" BorderBrush="White" BorderThickness="1" Padding="10,5" Margin="0,5" Background="#131313">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Import music" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                            </Button>
+                        </StackPanel>
+
+
+                        <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+
+                        <StackPanel Margin="0,5">
+
+                            <ToggleSwitch x:Name="BackgroundToggleSwitch" 
+                                          Margin="0,5" 
+                                          Header="Home Page Background" 
+                                          HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                          IsOn="{Binding Background, Mode=TwoWay}"/>
+
+                            <TextBlock Text="Notifies you when new track is downloaded." 
+                                       TextWrapping="Wrap"
+                                       Margin="0,10,0,5" 
+                                       Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                            <ToggleSwitch Header="Downloads Notification" 
+                                          HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                          IsOn="{Binding Notification, Mode=TwoWay}"/>
+
+
+                            <TextBlock Text="Turning this on will help to get the lyrics offline and you can access lyrics easily." 
+                                       TextWrapping="Wrap"
+                                       Margin="0,10,0,5" 
+                                       Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                            <ToggleSwitch Header="Automatically Save Lyrics" 
+                                          HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                          IsOn="{Binding LyricsOnOrOff, Mode=TwoWay}"/>
+
+                        </StackPanel>
+
+
+                        <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+
+                        <StackPanel Margin="0,5">
+                            <TextBlock Text="Change look and feel of app. Select what you like." 
+                                       TextWrapping="Wrap"
+                                       Margin="0,5"  
+                                       Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                            <TextBlock Text="Select Theme" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+
+                            <ComboBox Margin="0,5" Padding="10,0" x:Name="ColorBox" PlaceholderText="Select app theme."  VerticalAlignment="Top" SelectionChanged="ColorChanged">
+                                <ComboBoxItem Content="Accent"/>
+                                <ComboBoxItem Content="White"/>
+                            </ComboBox>
+
+                            <TextBlock Text="Hd videos may take long time to load." 
+                                       TextWrapping="Wrap"
+                                       Margin="0,5"  
+                                       Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                            <ToggleSwitch Margin="0,5,0,0" Header="High Definition Videos" 
+                                          HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                          IsOn="{Binding HD, Mode=TwoWay}"/>
+
+                        </StackPanel>
+
+                        <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                        <StackPanel Margin="0,5">
+                            <TextBlock TextWrapping="Wrap"
+                                           Margin="0,5"  
+                                           Style="{StaticResource SecondaryTextStyleMobile}">
+                                    <Run Text="Something is wrong, well you can fix it."/>
+                                    <LineBreak/>
+                                    <Run Text="This will delete everything and import your music again."/>
+                            </TextBlock>
+
+                            <Button Click="RepairMusicus" BorderBrush="White" BorderThickness="1" Padding="10,5" Margin="0,5,0,10" Background="#131313">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Refresh airstem" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                            </Button>
+
+
+                            <TextBlock Text="Download missing artists artwork. This make app look even better." TextWrapping="Wrap"
+                                           Margin="0,10,0,5"  
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+
+                            <Button Click="ArtistArtworkSync" BorderBrush="White" BorderThickness="1" Padding="10,5" Margin="0,5" Background="#131313">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Download missing artworks" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                            </Button>
+
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
+
+
+            <StackPanel x:Name="AboutScrollViewer">
+                <TextBlock Text="ABOUT" 
+                           Style="{StaticResource PivotItemHeaderTextStyle}" 
+                           Foreground="{StaticResource MusicusOtherColor}"
+                           VerticalAlignment="Top"
+                           Margin="0,0,0,15"
+                           HorizontalAlignment="Left"/>
+
+                <ScrollViewer>
+                    <StackPanel Margin="0,0,10,0">
+                        <StackPanel>
+
+                            <Button Click="AirstemClick" Margin="0,5" Style="{StaticResource PlainButtonStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Background="Brown">
+                                        <Image Height="100" Width="100" Source="/Assets/Square150x150Logo.scale-100.png" Stretch="UniformToFill"/>
+                                    </Grid>
+
+                                    <StackPanel Grid.Column="1" Margin="10,0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                        <TextBlock TextWrapping="Wrap" 
+                                                   Style="{StaticResource PrimaryTextStyle}" 
+                                                   Text="Airstem"/>
+
+                                        <TextBlock Margin="0,5,0,0" 
+                                                   TextWrapping="Wrap" 
+                                                   Style="{StaticResource OptionTextStyle}" 
+                                                   Text="Version - 1.3"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+
+                            <TextBlock Margin="0,5,0,10" HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource SecondaryTextStyleMobile}" >
+                                <Run Text="Explore the world of music with the airstem."/><LineBreak/>
+                                <Run Text="A music search and match engine for music discovery."/><LineBreak/>
+                                <Run Text="Enjoy music with a modern music player and downloader."/>
+                            </TextBlock>
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+
+                            <StackPanel Margin="0,5">
+
+                                <TextBlock Text="Loving airstem, don't forget to share and rate 5 star." 
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,5"
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <Button Click="ShareMusicus" BorderBrush="White" BorderThickness="1" Padding="10,5" Margin="0,5" Background="#131313">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Share with anyone" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+
+                                <Button Click="RateClick" BorderBrush="White" BorderThickness="1" Padding="10,5" Margin="0,5" Background="#131313">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Rate and review" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+
+                            </StackPanel>
+
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                            <StackPanel Margin="0,5">
+
+                                <TextBlock Text="Get social follow on twitter and intagram." 
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,5"
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Button Click="TwitterClick" Margin="0,0,10,0" Style="{StaticResource PlainButtonStyle}">
+                                        <Grid Background="{StaticResource SystemControlForegroundAccentBrush}">
+                                            <Image Height="50" Width="50" Source="/Assets/PcAppIcon/Twitter.png" Stretch="UniformToFill"/>
+                                        </Grid>
+                                    </Button>
+
+                                    <Button Click="InstagramClick" Style="{StaticResource PlainButtonStyle}">
+                                        <Grid Background="{StaticResource SystemControlForegroundAccentBrush}">
+                                            <Image Height="50" Width="50" Source="/Assets/PcAppIcon/Instagram.png" Stretch="UniformToFill"/>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+
+
+                                <TextBlock Text="Ask a question, suggest a feature. Send us an e-mail. We will reach to you asap." 
+                                           TextWrapping="Wrap"
+                                           Margin="0,10,0,0"
+                                           Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+                                <Button Click="RateClick" BorderBrush="White" BorderThickness="1" Padding="10,5" Margin="0,5" Background="#131313">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="airstemapp@outlook.com" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+
+                            </StackPanel>
+
+                            <Rectangle Height=".7" Fill="#333333" Margin="0,5"/>
+
+                            <StackPanel Margin="0,5">
+
+                                <ToggleSwitch Margin="0,5"
+                                              Header="Accept Privacy Policy" 
+                                              HeaderTemplate="{StaticResource ToogleSwitchTemplate}" 
+                                              IsOn="True" 
+                                              IsEnabled="False"/>
+
+                                <Button Click="PrivacyClick" BorderBrush="White" BorderThickness="1" Padding="10,5" Margin="0,5" Background="#131313">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Privacy policy" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+
+                                <Button Click="HelpClick" BorderBrush="White" BorderThickness="1" Padding="10,5" Margin="0,5" Background="#131313">
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Help + Faq" FontSize="15" Style="{StaticResource PrimaryTextStyle}"/>
+                                </Button>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
+
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        --><!--<Setter Target="AboutTextTextBlock.(Grid.Row)" Value="0" />
+                        <Setter Target="AboutTextTextBlock.(Grid.Column)" Value="1" />--><!--
+                        <Setter Target="AboutScrollViewer.(Grid.Row)" Value="0" />
+                        <Setter Target="AboutScrollViewer.(Grid.Column)" Value="2" />
+
+                        <Setter Target="RootGrid.ColumnDefinitions[0].Width" Value="*" />
+                        <Setter Target="RootGrid.ColumnDefinitions[1].Width" Value="40" />
+                        <Setter Target="RootGrid.ColumnDefinitions[2].Width" Value="*" />
+
+                        <Setter Target="RootGrid.RowDefinitions[0].Height" Value="*" />
+                        <Setter Target="RootGrid.RowDefinitions[1].Height" Value="0" />
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        --><!--<Setter Target="AboutTextTextBlock.(Grid.Row)" Value="2" />
+                        <Setter Target="AboutTextTextBlock.(Grid.Column)" Value="0" />--><!--
+                        <Setter Target="AboutScrollViewer.(Grid.Row)" Value="1" />
+                        <Setter Target="AboutScrollViewer.(Grid.Column)" Value="0" />
+
+                        <Setter Target="RootGrid.ColumnDefinitions[0].Width" Value="*" />
+                        <Setter Target="RootGrid.ColumnDefinitions[1].Width" Value="0" />
+                        <Setter Target="RootGrid.ColumnDefinitions[2].Width" Value="0" />
+
+                        <Setter Target="RootGrid.RowDefinitions[0].Height" Value="auto" />
+                        <Setter Target="RootGrid.RowDefinitions[1].Height" Value="auto" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </ScrollViewer>-->
+    
+</Musicus:PageBase>

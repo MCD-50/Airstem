@@ -1,0 +1,403 @@
+﻿<Musicus:PageBase
+    x:Class="Musicus.CollectionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Musicus="using:Musicus"  
+    mc:Ignorable="d"  
+    xmlns:local="using:Musicus"
+    
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    x:Name="Page"
+    
+    DataContext="{Binding Collection, Source={StaticResource Locator}}">
+
+    <Grid>
+        <Grid.Resources>
+            <JumpListItemBackgroundConverter x:Key="BackgroundConverter" />
+            
+            <DataTemplate x:Key="JumpTemplate">
+                <TextBlock Text="{Binding Group.Key}" Foreground="{Binding Converter={StaticResource BackgroundConverter}}" Style="{StaticResource HeaderTextStyle}"
+                           FontSize="22" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="GroupHeaderForMultiTemplate">
+                <StackPanel>
+                    <TextBlock Text="{Binding Key}" Foreground="{StaticResource MusicusOtherColor}" FontSize="22" Style="{StaticResource HeaderTextStyle}"/>
+                    <Rectangle Fill="{StaticResource MusicusOtherColor}" Width="80" Height=".5"/>
+                </StackPanel>
+            </DataTemplate>
+
+            <CollectionViewSource x:Key="SongGroups" IsSourceGrouped="True" Source="{Binding SortedSongs}" />
+            <CollectionViewSource x:Key="AlbumGroups" IsSourceGrouped="True" Source="{Binding SortedAlbums}" />
+            <CollectionViewSource x:Key="ArtistGroups"  IsSourceGrouped="True" Source="{Binding SortedArtists}" />
+            <CollectionViewSource x:Key="VideoGroups" IsSourceGrouped="True" Source="{Binding SortedVideos}"/>
+        </Grid.Resources>
+
+
+        <Pivot Title="COLLECTION" x:Name="MainPivot" 
+               SelectionChanged="MainPivotSelectionChanged"
+               HeaderTemplate="{StaticResource PivotHeaderTemplate}">
+            <PivotItem Header="songs" Margin="0">
+                <Grid Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="12,0" Visibility="{Binding Service.Songs.Count, Converter={StaticResource ReverseEmptyListToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+
+                        <Button Click="OpenSearchCollection" HorizontalAlignment="Right" Style="{StaticResource PlainButtonStyle}">
+                            <Border Width="40" CornerRadius="40" Height="40" Background="{StaticResource SystemControlBackgroundBaseLowBrush}">
+                                <SymbolIcon Symbol="Find"/>
+                            </Border>
+                        </Button>
+
+
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Button x:Name="S1" Click="ShuffleAll" Style="{StaticResource PlainButtonStyle}">
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Shuffle" RenderTransformOrigin="0,.5">
+                                        <SymbolIcon.RenderTransform>
+                                            <CompositeTransform ScaleX=".8" ScaleY=".8"/>
+                                        </SymbolIcon.RenderTransform>
+                                    </SymbolIcon>
+                                    <TextBlock Margin="5,0,5,2" Text="Shuffle all tracks" FontSize="14" VerticalAlignment="Center" Style="{StaticResource PrimaryTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+
+                             <Button Grid.Row="2" Style="{StaticResource PlainButtonStyle}" Click="OnEdgeTapped">
+                                <TextBlock x:Name="SelectCancelTextBlock" Text="Select" FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource MusicusOtherColor}" Style="{StaticResource PrimaryTextStyle}"/>
+                            </Button>
+                        </Grid>
+
+                  
+                    </Grid>
+
+                  
+                    <Grid Grid.Row="1">
+                        <TextBlock Visibility="{Binding Service.Songs.Count, Converter={StaticResource EmptyListToVisibilityConverter}}" 
+                                   Text="Its empty here, go find some." 
+                                   Margin="{StaticResource PcPadding}"
+                                   Style="{StaticResource MessageTextStyle}"/>
+                        
+                        <SemanticZoom>
+                            <SemanticZoom.ZoomedInView>
+
+                                <helpers:EdgeTappedListView x:Name="SongList"
+                                                            IsItemLeftEdgeTapEnabled="False"
+                                                            SelectionMode="None"
+                                                            ContainerContentChanging="ItemListView_ContainerContentChanging" 
+                                                            IsItemClickEnabled="True" 
+                                                            Padding="{StaticResource PcPadding}"
+                                                            ItemsSource="{Binding Source={StaticResource SongGroups}}">
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Musicus:SongViewer/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+
+                                    <ListView.GroupStyle>
+                                        <GroupStyle HidesIfEmpty="True"
+                                                    HeaderTemplate="{StaticResource GroupHeaderForMultiTemplate}" />
+                                    </ListView.GroupStyle>
+
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:InvokeCommandAction Command="{Binding SongClickCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </helpers:EdgeTappedListView>
+                            </SemanticZoom.ZoomedInView>
+
+                            <SemanticZoom.ZoomedOutView>
+                                <ListView Background="Black"
+                                          Padding="{StaticResource PcPadding}"
+                                          ItemsSource="{Binding Source={StaticResource SongGroups}, Path=CollectionGroups}" 
+                                          ItemTemplate="{StaticResource JumpTemplate}"/>
+
+                            </SemanticZoom.ZoomedOutView>
+
+                        </SemanticZoom>
+
+                    </Grid>
+                </Grid>
+
+            </PivotItem>
+
+            <PivotItem Header="artists" Margin="0">
+                <Grid Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="12,0" Visibility="{Binding Service.Songs.Count, Converter={StaticResource ReverseEmptyListToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Button Click="OpenSearchCollection" HorizontalAlignment="Right" Style="{StaticResource PlainButtonStyle}">
+                            <Border Width="40" CornerRadius="40" Height="40" Background="{StaticResource SystemControlBackgroundBaseLowBrush}">
+                                <SymbolIcon Symbol="Find"/>
+                            </Border>
+                        </Button>
+    
+                        <Button x:Name="S2" Grid.Row="1" Click="ShuffleAll" HorizontalAlignment="Left" Style="{StaticResource PlainButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Shuffle" RenderTransformOrigin="0,.5">
+                                    <SymbolIcon.RenderTransform>
+                                        <CompositeTransform ScaleX=".8" ScaleY=".8"/>
+                                    </SymbolIcon.RenderTransform>
+                                </SymbolIcon>
+                                <TextBlock Margin="5,0,5,2" Text="Shuffle all artists" FontSize="14" VerticalAlignment="Center" Style="{StaticResource PrimaryTextStyle}"/>
+                            </StackPanel>
+                        </Button>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <TextBlock Visibility="{Binding Service.Artists.Count, Converter={StaticResource EmptyListToVisibilityConverter}}" 
+                                   Text="Its empty here, go find some." 
+                                   Margin="{StaticResource PcPadding}"
+                                   Style="{StaticResource MessageTextStyle}"/>
+
+                        <SemanticZoom>
+                            <SemanticZoom.ZoomedInView>
+                                <ListView IsItemClickEnabled="True" 
+                                          Padding="{StaticResource PcPadding}"
+                                          ItemTemplate="{StaticResource CollectionArtistsTemplateMobile}"
+                                          ItemsSource="{Binding Source={StaticResource ArtistGroups}}">
+
+                                    <ListView.GroupStyle>
+                                        <GroupStyle HidesIfEmpty="True"
+                                                    HeaderTemplate="{StaticResource GroupHeaderForMultiTemplate}" />
+                                    </ListView.GroupStyle>
+
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:InvokeCommandAction Command="{Binding Commands.ArtistClickCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+
+                                </ListView>
+
+                            </SemanticZoom.ZoomedInView>
+
+                            <SemanticZoom.ZoomedOutView>
+                                <ListView Background="Black"
+                                          Padding="{StaticResource PcPadding}"
+                                          ItemsSource="{Binding Source={StaticResource ArtistGroups}, Path=CollectionGroups}"
+                                          ItemTemplate="{StaticResource JumpTemplate}" />
+                            </SemanticZoom.ZoomedOutView>
+
+                        </SemanticZoom>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Header="albums" Margin="0">
+                <Grid Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="12,0" Visibility="{Binding Service.Songs.Count, Converter={StaticResource ReverseEmptyListToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Button Click="OpenSearchCollection" HorizontalAlignment="Right" Style="{StaticResource PlainButtonStyle}">
+                            <Border Width="40" CornerRadius="40" Height="40" Background="{StaticResource SystemControlBackgroundBaseLowBrush}">
+                                <SymbolIcon Symbol="Find"/>
+                            </Border>
+                        </Button>
+
+                        
+                        <Button x:Name="S3" Grid.Row="1" Click="ShuffleAll" HorizontalAlignment="Left" Style="{StaticResource PlainButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Shuffle" RenderTransformOrigin="0,.5">
+                                    <SymbolIcon.RenderTransform>
+                                        <CompositeTransform ScaleX=".8" ScaleY=".8"/>
+                                    </SymbolIcon.RenderTransform>
+                                </SymbolIcon>
+                                <TextBlock Margin="5,0,5,2" Text="Shuffle all albums" FontSize="14" VerticalAlignment="Center" Style="{StaticResource PrimaryTextStyle}"/>
+                            </StackPanel>
+                        </Button>
+
+                    </Grid>
+
+
+                    <Grid Grid.Row="1">
+                        <TextBlock Visibility="{Binding Service.Albums.Count, Converter={StaticResource EmptyListToVisibilityConverter}}" 
+                                   Text="Its empty here, go find some."  
+                                   Margin="{StaticResource PcPadding}"
+                                   Style="{StaticResource MessageTextStyle}"/>
+
+                        <SemanticZoom>
+                            <SemanticZoom.ZoomedInView>
+                                <ListView IsItemClickEnabled="True" 
+                                          Padding="{StaticResource PcPadding}"
+                                          ItemTemplate="{StaticResource CollectionAlbumsTemplateMobile}"
+                                          ItemsSource="{Binding Source={StaticResource AlbumGroups}}">
+
+                                    <ListView.GroupStyle>
+                                        <GroupStyle HidesIfEmpty="True"
+                                                    HeaderTemplate="{StaticResource GroupHeaderForMultiTemplate}" />
+                                    </ListView.GroupStyle>
+
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:InvokeCommandAction Command="{Binding Commands.AlbumClickCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </ListView>
+
+                            </SemanticZoom.ZoomedInView>
+
+                            <SemanticZoom.ZoomedOutView>
+                                <ListView Background="Black" 
+                                          Padding="{StaticResource PcPadding}"
+                                          ItemsSource="{Binding Source={StaticResource AlbumGroups}, Path=CollectionGroups}"
+                                          ItemTemplate="{StaticResource JumpTemplate}" />
+                            </SemanticZoom.ZoomedOutView>
+
+                        </SemanticZoom>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem x:Name="MainPivotItem4" Header="videos" Margin="0">
+                <Grid Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="12,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Button Click="OpenSearchCollection" HorizontalAlignment="Right" Style="{StaticResource PlainButtonStyle}">
+                            <Border Width="40" CornerRadius="40" Height="40" Background="{StaticResource SystemControlBackgroundBaseLowBrush}">
+                                <SymbolIcon Symbol="Find"/>
+                            </Border>
+                        </Button>
+
+                        <Button x:Name="S4" Visibility="{Binding Service.Videos.Count, Converter={StaticResource ReverseEmptyListToVisibilityConverter}}" Grid.Row="1" Click="ShuffleAll" Style="{StaticResource PlainButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Shuffle" RenderTransformOrigin="0,.5">
+                                    <SymbolIcon.RenderTransform>
+                                        <CompositeTransform ScaleX=".8" ScaleY=".8"/>
+                                    </SymbolIcon.RenderTransform>
+                                </SymbolIcon>
+                                <TextBlock Margin="5,0,5,2" Text="Shuffle all tracks" FontSize="14" VerticalAlignment="Center" Style="{StaticResource PrimaryTextStyle}"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+
+                        <TextBlock Style="{StaticResource MessageTextStyle}" 
+                                   Visibility="{Binding Service.Videos.Count, Converter={StaticResource EmptyListToVisibilityConverter}}" 
+                                   Text="Its empty here, go add few."
+                                   Margin="{StaticResource PcPadding}"/>
+
+                        <SemanticZoom>
+                            <SemanticZoom.ZoomedInView>
+
+                                <ListView IsItemClickEnabled="True" 
+                                          Padding="{StaticResource PcPadding}"
+                                          ItemsSource="{Binding Source={StaticResource VideoGroups}}"
+                                          ItemTemplate="{StaticResource VideoTemplateMobile}">
+
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:InvokeCommandAction Command="{Binding VideoClickCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+
+                                    <ListView.GroupStyle>
+                                        <GroupStyle HidesIfEmpty="True" 
+                                                    HeaderTemplate="{StaticResource GroupHeaderForMultiTemplate}"/>
+                                    </ListView.GroupStyle>
+
+                                </ListView>
+
+                            </SemanticZoom.ZoomedInView>
+
+                            <SemanticZoom.ZoomedOutView>
+                                <ListView Background="Black" 
+                                          ItemsSource="{Binding Source={StaticResource VideoGroups}, Path=CollectionGroups}" 
+                                          ItemTemplate="{StaticResource JumpTemplate}"
+                                          Padding="{StaticResource PcPadding}"/>
+                            </SemanticZoom.ZoomedOutView>
+                        </SemanticZoom>
+
+                    </Grid>
+                </Grid>
+            </PivotItem>
+
+        </Pivot>
+
+
+        <Button x:Name="OptionButton" Visibility="Collapsed" HorizontalAlignment="Right" Click="ShowFlyoutClick" Margin="12,0,12,10" 
+                VerticalAlignment="Bottom" Style="{StaticResource PlainButtonStyle}">
+
+            <StackPanel x:Name="FlyoutPanel">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                        Text="Play" Click="PlayClicked" />
+                        <MenuFlyoutSubItem Text="Add to">
+                            <MenuFlyoutItem x:Name="AddToPlaylistOption" Style="{StaticResource MenuFlyoutItemStyle}"
+                                            Text="Playlist" Click="AddToPlaylistClick" />
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                        Text="Delete" Click="DeleteClicked"/>
+                        <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" 
+                                        Text="Cancel" Click="CancelClicked"/>
+
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+
+
+                <Border Width="40" CornerRadius="40" Height="40" Background="{StaticResource SystemControlBackgroundBaseLowBrush}">
+                    <SymbolIcon Symbol="More"/>
+                </Border>
+
+            </StackPanel>
+        </Button>
+        
+    </Grid>
+
+
+    <!--<Page.BottomAppBar>
+        <CommandBar Background="#7F1B1A1A">
+            <AppBarButton Label="Add" Icon="Add" x:Name="AddItemAppBarBtn"/>
+            <AppBarButton Label="Delete" Icon="Delete" x:Name="RemoveItemAppBarBtn" />
+            <AppBarButton Label="Select All" Icon="SelectAll" x:Name="CancelSelectionAppBarBtn"/>
+        </CommandBar>
+    </Page.BottomAppBar>-->
+
+</Musicus:PageBase>

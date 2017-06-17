@@ -1,0 +1,65 @@
+﻿<Musicus:PageBase
+    x:Class="Musicus.SpotifyAlbumPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Musicus"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    x:Name="Page"
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:Musicus="using:Musicus"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    DataContext="{Binding Source={StaticResource Locator}, Path=SpotifyAlbum}">
+
+
+
+
+
+    <Grid>
+
+        <Grid Margin="0,80,0,0">
+            <Grid.Background>
+                <ImageBrush ImageSource="{Binding Album.Images.Large}" Stretch="UniformToFill" Opacity=".35"/>
+            </Grid.Background>
+        </Grid>
+
+        <Pivot x:Name="MainPivot" Title="{Binding Name, Converter={StaticResource UpperCaseConverter}}" HeaderTemplate="{StaticResource PivotHeaderTemplate}" Foreground="#B2FFFFFF">
+
+            <PivotItem x:Name="MainPivotItem1" Header="save" Margin="0">
+
+                <Grid>
+
+                    <TextBlock Margin="{StaticResource PcPadding}" 
+                               Text="{Binding Message}" 
+                               Visibility="{Binding Message,Converter={StaticResource EmptyVisibilityConverter}}" 
+                               Style="{StaticResource MessageTextStyle}"/>
+
+                    <ListView IsItemClickEnabled="True" 
+                              ItemsSource="{Binding Tracks}" 
+                              Padding="{StaticResource PcPadding}">
+
+                        <ListView.ItemTemplateSelector>
+
+                            <helpers:DataTemplateHelper AdvertTemplate="{StaticResource AdvertTemplateMobile}"
+                                                        ListAdvertTemplate="{StaticResource ListAdvertTemplate}"
+                                                        NormalTemplate="{StaticResource SpotifyAlbumPageSongsTemplateMobile}"/>
+
+                        </ListView.ItemTemplateSelector>
+
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:InvokeCommandAction Command="{Binding SongClickRelayCommand}" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+
+                    </ListView>
+                </Grid>
+
+            </PivotItem>
+
+        </Pivot>
+    </Grid>
+</Musicus:PageBase>

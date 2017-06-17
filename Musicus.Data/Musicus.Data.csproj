@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC5C85D9-0D1A-45DB-9C27-0478800FBEF4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Musicus.Data</RootNamespace>
+    <AssemblyName>Musicus.Data</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiKeys.cs" />
+    <Compile Include="Extentions\RestlessExtensions.cs" />
+    <Compile Include="Extentions\RestRequestExtensions.cs" />
+    <Compile Include="Extentions\UriExtensions.cs" />
+    <Compile Include="Model\Advertisement\Advert.cs" />
+    <Compile Include="Model\Advertisement\Base.cs" />
+    <Compile Include="Model\Advertisement\ListAdvert.cs" />
+    <Compile Include="Model\AnyMaza\GoogleSearchRoot.cs" />
+    <Compile Include="Model\Deezer\DeezerAlbum.cs" />
+    <Compile Include="Model\Deezer\DeezerArtist.cs" />
+    <Compile Include="Model\Deezer\DeezerPageResponse.cs" />
+    <Compile Include="Model\Deezer\DeezerSong.cs" />
+    <Compile Include="Model\Meile\MeileDetail.cs" />
+    <Compile Include="Model\Meile\MeileDetailRoot.cs" />
+    <Compile Include="Model\Meile\MeileValues.cs" />
+    <Compile Include="Model\Mp3Clan\Mp3ClanRoot.cs" />
+    <Compile Include="Model\Mp3Clan\Mp3ClanSong.cs" />
+    <Compile Include="Model\Netease\NeteaseAlbum.cs" />
+    <Compile Include="Model\Netease\NeteaseArtist.cs" />
+    <Compile Include="Model\Netease\NeteaseDetailRoot.cs" />
+    <Compile Include="Model\Netease\NeteaseDetailSong.cs" />
+    <Compile Include="Model\Netease\NeteaseResult.cs" />
+    <Compile Include="Model\Netease\NeteaseRoot.cs" />
+    <Compile Include="Model\Netease\NeteaseSong.cs" />
+    <Compile Include="Model\SoundCloud\Model\CategoriesSoundCloud.cs" />
+    <Compile Include="Model\SoundCloud\Model\DownloadSoundCloud.cs" />
+    <Compile Include="Model\SoundCloud\Model\MenuMainPage.cs" />
+    <Compile Include="Model\SoundCloud\Model\Photos.cs" />
+    <Compile Include="Model\SoundCloud\Model\PlaylistSoundCloud.cs" />
+    <Compile Include="Model\SoundCloud\Model\SearchSoundCloud.cs" />
+    <Compile Include="Model\SoundCloud\Model\TracksSoundCloud.cs" />
+    <Compile Include="Model\SoundCloud\Model\UserSoundCloud.cs" />
+    <Compile Include="Model\SoundCloud\SoundCloudRoot.cs" />
+    <Compile Include="Model\SoundCloud\SoundCloudSong.cs" />
+    <Compile Include="Model\SoundCloud\SoundCloudUser.cs" />
+    <Compile Include="Model\WebData\Void.cs" />
+    <Compile Include="Model\WebData\WebAlbum.cs" />
+    <Compile Include="Model\WebData\WebArtist.cs" />
+    <Compile Include="Model\WebData\WebResults.cs" />
+    <Compile Include="Model\WebData\WebSong.cs" />
+    <Compile Include="Model\WebData\WebVideo.cs" />
+    <Compile Include="Model\WebSongConverter.cs" />
+    <Compile Include="Mp3MatchEngine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\Deezer\DeezerAlbumRequest.cs" />
+    <Compile Include="Provider\Deezer\DeezerArtistAlbumsRequest.cs" />
+    <Compile Include="Provider\Deezer\DeezerArtistRequest.cs" />
+    <Compile Include="Provider\Deezer\DeezerArtistTopTracksRequest.cs" />
+    <Compile Include="Provider\Deezer\DeezerChartRequest.cs" />
+    <Compile Include="Provider\Deezer\DeezerSearchRequest.cs" />
+    <Compile Include="Provider\Deezer\DeezerTrackRequest.cs" />
+    <Compile Include="Provider\Deezer\Model\DataResponse.cs" />
+    <Compile Include="Provider\Deezer\Model\DeezerAlbum.cs" />
+    <Compile Include="Provider\Deezer\Model\DeezerArtist.cs" />
+    <Compile Include="Provider\Deezer\Model\DeezerBaseResponse.cs" />
+    <Compile Include="Provider\Deezer\Model\DeezerError.cs" />
+    <Compile Include="Provider\Deezer\Model\DeezerPageResponse.cs" />
+    <Compile Include="Provider\Deezer\Model\DeezerSong.cs" />
+    <Compile Include="Requests\AnyMazaSearchRequest.cs" />
+    <Compile Include="Requests\MeileDetailsRequest.cs" />
+    <Compile Include="Requests\MeileSearchRequest.cs" />
+    <Compile Include="Requests\MiMp3SSearchRequest.cs" />
+    <Compile Include="Requests\Mp3FreexSearchRequest.cs" />
+    <Compile Include="Requests\Mp3GluSearchRequest .cs" />
+    <Compile Include="Requests\Mp3lioSearchRequest.cs" />
+    <Compile Include="Requests\Mp3MinerSearchRequest.cs" />
+    <Compile Include="Requests\Mp3PmSearchRequest.cs" />
+    <Compile Include="Requests\NeteaseDetailsRequest.cs" />
+    <Compile Include="Requests\NeteaseSearchRequest.cs" />
+    <Compile Include="Requests\PleerDetailsRequest.cs" />
+    <Compile Include="Requests\PleerSearchRequest.cs" />
+    <Compile Include="Requests\SoundCloudSearchRequest.cs" />
+    <Compile Include="RestObjectRequests\DeserializerExtensions.cs" />
+    <Compile Include="RestObjectRequests\DotNetXmlDeserializer.cs" />
+    <Compile Include="RestObjectRequests\DotNetXmlSerializer.cs" />
+    <Compile Include="RestObjectRequests\HtmlDeserializer.cs" />
+    <Compile Include="RestObjectRequests\IDeserializer.cs" />
+    <Compile Include="RestObjectRequests\ISerializer.cs" />
+    <Compile Include="RestObjectRequests\JsonDeserializer.cs" />
+    <Compile Include="RestObjectRequests\JsonSerializer.cs" />
+    <Compile Include="RestObjectRequests\RestObjectRequest.cs" />
+    <Compile Include="RestObjectRequests\RestRequest.cs" />
+    <Compile Include="RestObjectRequests\RestResponse.cs" />
+    <Compile Include="Service\AudioProviders\AnyMazaUrl.cs" />
+    <Compile Include="Service\AudioProviders\MatchStringExtentions\ClosestMatchHelper.cs" />
+    <Compile Include="Service\AudioProviders\MatchStringExtentions\IdentfyMatchTrack.cs" />
+    <Compile Include="Service\AudioProviders\MeileUrl.cs" />
+    <Compile Include="Service\AudioProviders\MiMp3Url.cs" />
+    <Compile Include="Service\AudioProviders\Mp3ClanUrl.cs" />
+    <Compile Include="Service\AudioProviders\Mp3FreeXMatchUrl.cs" />
+    <Compile Include="Service\AudioProviders\Mp3GluUrl.cs" />
+    <Compile Include="Service\AudioProviders\Mp3LioUrl.cs" />
+    <Compile Include="Service\AudioProviders\Mp3MinerUrl.cs" />
+    <Compile Include="Service\AudioProviders\Mp3PmUrl.cs" />
+    <Compile Include="Service\AudioProviders\Mp3TruckUrl.cs" />
+    <Compile Include="Service\AudioProviders\NeteaseUrl.cs" />
+    <Compile Include="Service\AudioProviders\PleerUrl.cs" />
+    <Compile Include="Service\AudioProviders\SogilyUrl.cs" />
+    <Compile Include="Service\AudioProviders\SoundCloudUrl.cs" />
+    <Compile Include="Service\AudioProviders\YouTubeUrl.cs" />
+    <Compile Include="Service\Interfaces\IDeezerService.cs" />
+    <Compile Include="Service\Interfaces\IMp3SearchService.cs" />
+    <Compile Include="Service\Interfaces\IScrobblerService.cs" />
+    <Compile Include="Service\Interfaces\ISpotifyService.cs" />
+    <Compile Include="Service\Interfaces\IMiscellaneousService.cs" />
+    <Compile Include="Service\Interfaces\IVideoUrlService.cs" />
+    <Compile Include="Service\RunTime\DeezerService.cs" />
+    <Compile Include="Service\RunTime\MiscellaneousService.cs" />
+    <Compile Include="Service\RunTime\Mp3SearchService.cs" />
+    <Compile Include="Service\RunTime\ScrobblerService.cs" />
+    <Compile Include="Service\RunTime\SpotifyService.cs" />
+    <Compile Include="Provider\Spotify\AlbumType.cs" />
+    <Compile Include="Provider\Spotify\Models\BasicModel.cs" />
+    <Compile Include="Provider\Spotify\Models\ChartTrack.cs" />
+    <Compile Include="Provider\Spotify\Models\CheckUserTracks.cs" />
+    <Compile Include="Provider\Spotify\Models\Copyright.cs" />
+    <Compile Include="Provider\Spotify\Models\Error.cs" />
+    <Compile Include="Provider\Spotify\Models\ErrorResponse.cs" />
+    <Compile Include="Provider\Spotify\Models\FullAlbum.cs" />
+    <Compile Include="Provider\Spotify\Models\FullArtist.cs" />
+    <Compile Include="Provider\Spotify\Models\FullTrack.cs" />
+    <Compile Include="Provider\Spotify\Models\Image.cs" />
+    <Compile Include="Provider\Spotify\Models\Paging.cs" />
+    <Compile Include="Provider\Spotify\Models\PlaylistTrack.cs" />
+    <Compile Include="Provider\Spotify\Models\PlaylistTrackCollection.cs" />
+    <Compile Include="Provider\Spotify\Models\PrivateProfile.cs" />
+    <Compile Include="Provider\Spotify\Models\PublicProfile.cs" />
+    <Compile Include="Provider\Spotify\Models\SearchItem.cs" />
+    <Compile Include="Provider\Spotify\Models\SeveralAlbums.cs" />
+    <Compile Include="Provider\Spotify\Models\SeveralArtists.cs" />
+    <Compile Include="Provider\Spotify\Models\SeveralTracks.cs" />
+    <Compile Include="Provider\Spotify\Models\SimpleAlbum.cs" />
+    <Compile Include="Provider\Spotify\Models\SimpleArtist.cs" />
+    <Compile Include="Provider\Spotify\Models\SimplePlaylist.cs" />
+    <Compile Include="Provider\Spotify\Models\SimpleTrack.cs" />
+    <Compile Include="Provider\Spotify\Models\Token.cs" />
+    <Compile Include="Provider\Spotify\SearchType.cs" />
+    <Compile Include="Provider\Spotify\SpotifyWebApi.cs" />
+    <Compile Include="Provider\Spotify\StringAttribute.cs" />
+    <Compile Include="Provider\Spotify\Util.cs" />
+    <Compile Include="Service\RunTime\VideoUrlService.cs" />
+    <EmbeddedResource Include="Properties\Musicus.Data.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Musicus.Core\Musicus.Core.csproj">
+      <Project>{261bba2b-715b-4e10-8c8e-a1e507dcf2e3}</Project>
+      <Name>Musicus.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

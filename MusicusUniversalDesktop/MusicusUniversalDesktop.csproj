@@ -1,0 +1,584 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{A410772B-6422-425B-B5AC-A7A9C97922FF}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Musicus</RootNamespace>
+    <AssemblyName>MusicusUniversalDesktop</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>MusicusUniversalDesktop_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>ADB15AA2AB2318328CBD12CEF10A9DD6C25ED0BA</PackageCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="MusicusUniversalDesktop_TemporaryKey.pfx" />
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddedFolders.xaml.cs">
+      <DependentUpon>AddedFolders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ColorView.xaml.cs">
+      <DependentUpon>ColorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\ColorPicker.cs" />
+    <Compile Include="Helpers\BackgroundHelpers\BackgroundTaskUtility.cs" />
+    <Compile Include="Helpers\DataTemplateHelper.cs" />
+    <Compile Include="ImportRefreshPage.xaml.cs">
+      <DependentUpon>ImportRefreshPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RadioPage.xaml.cs">
+      <DependentUpon>RadioPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VideoInformationPage.xaml.cs">
+      <DependentUpon>VideoInformationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeezerAlbumPage.xaml.cs">
+      <DependentUpon>DeezerAlbumPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FirstRunPage.xaml.cs">
+      <DependentUpon>FirstRunPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\AddDeleteShareManager.cs" />
+    <Compile Include="Helpers\AlternatingRowListView.cs" />
+    <Compile Include="Helpers\CollectionCommandHelper.cs" />
+    <Compile Include="Helpers\CustomContols\FlipViewIndicator.cs" />
+    <Compile Include="Helpers\DoubleWrapper.cs" />
+    <Compile Include="Helpers\DownloadArtworks.cs" />
+    <Compile Include="Helpers\EdgeTappedListView.cs" />
+    <Compile Include="Helpers\MessageHelpers.cs" />
+    <Compile Include="Helpers\ModalSheetUtility.cs" />
+    <Compile Include="Helpers\PlayAndQueueHelper.cs" />
+    <Compile Include="Helpers\SaveTrackHelpers\LastFmTrackSavingHelper.cs" />
+    <Compile Include="Helpers\SaveTrackHelpers\SpotifySavingHelper.cs" />
+    <Compile Include="Helpers\SaveTrackHelpers\ViezTrackSavingHelper.cs" />
+    <Compile Include="Helpers\SheetUtility.cs" />
+    <Compile Include="Helpers\SongSavingHelper.cs" />
+    <Compile Include="Helpers\Triggers\DeviceFamilyStateTrigger.cs" />
+    <Compile Include="Helpers\Triggers\ITriggerValue.cs" />
+    <Compile Include="Helpers\Triggers\NetworkConnectionStateTrigger.cs" />
+    <Compile Include="Helpers\Triggers\OrientationStateTrigger.cs" />
+    <Compile Include="Helpers\Triggers\RegexStateTrigger.cs" />
+    <Compile Include="Helpers\Triggers\UserInteractionModeTrigger.cs" />
+    <Compile Include="Helpers\Triggers\WeakEventListener.cs" />
+    <Compile Include="LocalMusicHelpers\LocalMusicHelper.cs" />
+    <Compile Include="LocalMusicHelpers\LocalSong.cs" />
+    <Compile Include="NewTrackAlbumPage.xaml.cs">
+      <DependentUpon>NewTrackAlbumPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlayerHelpers\AudioPlayerHelper.cs" />
+    <Compile Include="PlayerHelpers\PlayerViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extras\AudioCapturePermissions.cs" />
+    <Compile Include="TransitionHelpers\Navigator.cs" />
+    <Compile Include="TransitionHelpers\PageBase.cs" />
+    <Compile Include="TransitionHelpers\PageTransition.cs" />
+    <Compile Include="TransitionHelpers\TransitionHelper.cs" />
+    <Compile Include="Utilities\BlurImageTool.cs" />
+    <Compile Include="Utilities\BoolOpacityConverter.cs" />
+    <Compile Include="Utilities\CollectionHelper.cs" />
+    <Compile Include="LocalConverters\DownloadingMarginConverter.cs" />
+    <Compile Include="Utilities\SaveResults.cs" />
+    <Compile Include="Utilities\SavingError.cs" />
+    <Compile Include="Utilities\ScreenTimeoutHelper.cs" />
+    <Compile Include="Utilities\ShareSongHelper.cs" />
+    <Compile Include="Utilities\ShowFlyoutAction.cs" />
+    <Compile Include="Utilities\SongDownloadService.cs" />
+    <Compile Include="LocalConverters\SongStateConverter.cs" />
+    <Compile Include="Utilities\StreamFileAbstraction.cs" />
+    <Compile Include="Utilities\UiBlockerUtility.cs" />
+    <Compile Include="Utilities\ZoomInTransition.cs" />
+    <Compile Include="Utilities\ZoomOutTransition.cs" />
+    <Compile Include="VideoPage.xaml.cs">
+      <DependentUpon>VideoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\CollectionAlbumViewModel.cs" />
+    <Compile Include="ViewModel\CollectionArtistViewModel.cs" />
+    <Compile Include="ViewModel\CollectionPlaylistViewModel.cs" />
+    <Compile Include="ViewModel\CollectionSearchViewModel.cs" />
+    <Compile Include="ViewModel\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\DownloadManagerViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ManualMatchViewModel.cs" />
+    <Compile Include="ViewModel\Mvvm\Commands\Command.cs" />
+    <Compile Include="ViewModel\Mvvm\Commands\CommandGeneric.cs" />
+    <Compile Include="ViewModel\Mvvm\Dispatcher\DispatcherHelper.cs" />
+    <Compile Include="ViewModel\Mvvm\Helpers\IExecuteWithObject.cs" />
+    <Compile Include="ViewModel\Mvvm\Helpers\IExecuteWithObjectAndResult.cs" />
+    <Compile Include="ViewModel\Mvvm\Helpers\WeakAction.cs" />
+    <Compile Include="ViewModel\Mvvm\Helpers\WeakActionGeneric.cs" />
+    <Compile Include="ViewModel\Mvvm\Helpers\WeakFunc.cs" />
+    <Compile Include="ViewModel\Mvvm\Helpers\WeakFuncGeneric.cs" />
+    <Compile Include="ViewModel\Mvvm\Others\ObservableObject.cs" />
+    <Compile Include="ViewModel\Mvvm\Others\ViewModelBase.cs" />
+    <Compile Include="ViewModel\Mvvm\SimpleIoc\ISimpleIoc.cs" />
+    <Compile Include="ViewModel\Mvvm\SimpleIoc\PreferredConstructorAttribute.cs" />
+    <Compile Include="ViewModel\Mvvm\SimpleIoc\SimpleIoc.cs" />
+    <Compile Include="ViewModel\NowPlayingViewModel.cs" />
+    <Compile Include="PlayerHelpers\VideoPlayerViewModel.cs" />
+    <Compile Include="ViewModel\RootViewModel.cs" />
+    <Compile Include="ViewModel\SearchViewModel.cs" />
+    <Compile Include="ViewModel\SettingViewModel.cs" />
+    <Compile Include="ViewModel\SpotifyAlbumViewModel.cs" />
+    <Compile Include="ViewModel\SpotifyArtistViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="AddToPlaylistPage.xaml.cs">
+      <DependentUpon>AddToPlaylistPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RootPage.xaml.cs">
+      <DependentUpon>RootPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionAlbumPage.xaml.cs">
+      <DependentUpon>CollectionAlbumPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionArtistPage.xaml.cs">
+      <DependentUpon>CollectionArtistPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionPage.xaml.cs">
+      <DependentUpon>CollectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionPlaylistPage.xaml.cs">
+      <DependentUpon>CollectionPlaylistPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionPlaylistsPage.xaml.cs">
+      <DependentUpon>CollectionPlaylistsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadManager.xaml.cs">
+      <DependentUpon>DownloadManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManualMatchPage.xaml.cs">
+      <DependentUpon>ManualMatchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchCollectionPage.xaml.cs">
+      <DependentUpon>SearchCollectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Animations.xaml.cs">
+      <DependentUpon>Animations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SidePanel.xaml.cs">
+      <DependentUpon>SidePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SongViewer.xaml.cs">
+      <DependentUpon>SongViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NowPlayingPage.xaml.cs">
+      <DependentUpon>NowPlayingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NowPlayingSheet.xaml.cs">
+      <DependentUpon>NowPlayingSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditTrackMetadata.xaml.cs">
+      <DependentUpon>EditTrackMetadata.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SpotifyAlbumPage.xaml.cs">
+      <DependentUpon>SpotifyAlbumPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SpotifyArtistPage.xaml.cs">
+      <DependentUpon>SpotifyArtistPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddAPlaylist.xaml.cs">
+      <DependentUpon>AddAPlaylist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\MissingArtwork.png" />
+    <Content Include="Assets\NewIcons\Download.png" />
+    <Content Include="Assets\NewIcons\Home.png" />
+    <Content Include="Assets\NewIcons\Music.png" />
+    <Content Include="Assets\NewIcons\Playlist.png" />
+    <Content Include="Assets\NewIcons\Radio.png" />
+    <Content Include="Assets\NewIcons\Settings.png" />
+    <Content Include="Assets\PcAppIcon\114778.jpg" />
+    <Content Include="Assets\PcAppIcon\190579.jpg" />
+    <Content Include="Assets\PcAppIcon\300300.png" />
+    <Content Include="Assets\PcAppIcon\Add.png" />
+    <Content Include="Assets\PcAppIcon\Bg.jpg" />
+    <Content Include="Assets\PcAppIcon\Download.png" />
+    <Content Include="Assets\PcAppIcon\Facebook.png" />
+    <Content Include="Assets\PcAppIcon\Google.png" />
+    <Content Include="Assets\PcAppIcon\Home.png" />
+    <Content Include="Assets\PcAppIcon\Home1.png" />
+    <Content Include="Assets\PcAppIcon\Instagram.png" />
+    <Content Include="Assets\PcAppIcon\Library.png" />
+    <Content Include="Assets\PcAppIcon\Microsoft.png" />
+    <Content Include="Assets\PcAppIcon\NewTracks.png" />
+    <Content Include="Assets\PcAppIcon\Play.png" />
+    <Content Include="Assets\PcAppIcon\Playlist.png" />
+    <Content Include="Assets\PcAppIcon\Search.png" />
+    <Content Include="Assets\PcAppIcon\Setting.png" />
+    <Content Include="Assets\PcAppIcon\TopAlbums.png" />
+    <Content Include="Assets\PcAppIcon\Twitter.png" />
+    <Content Include="Assets\PcAppIcon\Video.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Square310x310Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256_altform-unplated.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48_altform-unplated.png" />
+    <Content Include="Assets\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Square71x71Logo.scale-200.png" />
+    <Content Include="Assets\Square71x71Logo.scale-400.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Properties\Default.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="AddedFolders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ColorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\CollectionPlaylistPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\DeezerAlbumPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\SpotifyAlbumPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\SpotifyArtistPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\VideoInformationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImportRefreshPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RadioPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\MobileTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\OtherTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\PcTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="VideoInformationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeezerAlbumPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\CollectionAlbumPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\CollectionArtistPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\CollectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\RootPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeviceFamily-Mobile\SongViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FirstRunPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewTrackAlbumPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="AddToPlaylistPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RootPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CollectionAlbumPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CollectionArtistPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CollectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CollectionPlaylistPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CollectionPlaylistsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DownloadManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ManualMatchPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchCollectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Animations.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SidePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SongViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NowPlayingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NowPlayingSheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EditTrackMetadata.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SpotifyAlbumPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SpotifyArtistPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AddAPlaylist.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VideoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0">
+      <Name>Microsoft Advertising SDK for XAML</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.19.3">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
+    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Musicus.BackgroundPlayer\Musicus.BackgroundPlayer.csproj">
+      <Project>{9c182431-ed52-4016-8b72-43fb27cc832a}</Project>
+      <Name>Musicus.BackgroundPlayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Musicus.Core.WinRt\Musicus.Core.WinRt.csproj">
+      <Project>{d3779844-ee6e-43e6-bce3-54a635833322}</Project>
+      <Name>Musicus.Core.WinRt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Musicus.Core\Musicus.Core.csproj">
+      <Project>{261bba2b-715b-4e10-8c8e-a1e507dcf2e3}</Project>
+      <Name>Musicus.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Musicus.Data.Collection\Musicus.Data.Collection.csproj">
+      <Project>{cbd90450-cf3b-4c59-97dc-6f0e2d717683}</Project>
+      <Name>Musicus.Data.Collection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Musicus.Data\Musicus.Data.csproj">
+      <Project>{cc5c85d9-0d1a-45db-9c27-0478800fbef4}</Project>
+      <Name>Musicus.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

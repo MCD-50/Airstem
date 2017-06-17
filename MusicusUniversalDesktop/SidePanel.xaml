@@ -1,0 +1,132 @@
+﻿<UserControl
+    x:Class="Musicus.SidePanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"  
+    xmlns:local="using:Musicus"
+    xmlns:utilities="using:Musicus.Utilities"
+    DataContext="{Binding PBar, Source={StaticResource Locator}}">
+
+
+        <Grid Width="48" Background="#131313">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Margin="0,5" Click="OpenHomePage" Style="{StaticResource PlainButtonStyle}">
+                <Grid Height="40" x:Name="HomeIcon">
+                    <Image Source="/Assets/PcAppIcon/Home.png" Width="30" Stretch="Uniform"/>
+                </Grid>
+            </Button>
+
+
+         
+            <!--<StackPanel Grid.Row="0">
+           
+                <Button Margin="0,0,0,5" Click="OpenHomePage" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="48">
+                        <FontIcon x:Name="HomeIcon" FontFamily="Segoe MDL2 Assets" Glyph="&#xE10F;" Grid.Column="1" />
+                    </Grid>
+                </Button>
+
+
+
+                <Button Margin="0,0,0,5" Click="OpenArtistList" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="48">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="ArtistBorder" VerticalAlignment="Center" Height="30" Width="2" CornerRadius="3" />
+                        <FontIcon x:Name="ArtistIcon" FontFamily="Segoe MDL2 Assets" Glyph="&#xE13D;" Grid.Column="1" Foreground="{StaticResource MusicusOtherColor}"/>
+                        <StackPanel x:Name="ArtistPanel" VerticalAlignment="Center" Grid.Column="1">
+                            <Image Source="/Assets/PcAppIcon/Artist.png" Width="30" Height="30" Stretch="UniformToFill"/>
+                        </StackPanel>
+                    </Grid>
+                </Button>
+
+                <Button Margin="0,0,0,5" Click="OpenAlbumList" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="48">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="AlbumBorder" VerticalAlignment="Center" Height="30" Width="2" CornerRadius="3" />
+                        <FontIcon x:Name="AlbumIcon" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B7;" RenderTransformOrigin=".5,.5" Grid.Column="1" Foreground="{StaticResource MusicusOtherColor}">
+                            <FontIcon.RenderTransform>
+                                <CompositeTransform Rotation="-90"/>
+                            </FontIcon.RenderTransform>
+                        </FontIcon>
+                        <StackPanel x:Name="AlbumPanel" VerticalAlignment="Center" Grid.Column="1">
+                            <Image Source="/Assets/PcAppIcon/Album.png" Width="30" Height="30" Stretch="UniformToFill"/>
+                        </StackPanel>
+                    </Grid>
+                </Button>
+
+             
+               
+            </StackPanel>-->
+
+
+
+            <StackPanel Grid.Row="1" Margin="0,10">
+
+                <Button Click="OpenSongList" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="40" x:Name="SongIcon">
+                    <Image Source="/Assets/PcAppIcon/Library.png" Width="30" Stretch="Uniform"/>
+                    </Grid>
+                </Button>
+
+                <!--<Button Click="OpenVideoList" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="40" x:Name="VideoIcon">
+                        <Image Source="/Assets/PcAppIcon/Video.png" Width="30" Stretch="Uniform"/>
+                    </Grid>
+                </Button>-->
+
+            <Button Click="OpenPlaylistList" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="40" x:Name="PlaylistIcon">
+                    <Image Source="/Assets/PcAppIcon/Playlist.png" Width="30" Stretch="Uniform"/>
+                    </Grid>
+                </Button>
+
+
+                <!--<Button Click="OpenSearchPage" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="40" x:Name="SearchIcon">
+                        <Image Source="/Assets/PcAppIcon/Search.png" Width="30" Stretch="Uniform"/>
+                    </Grid>
+                </Button>-->
+
+
+                <Button Visibility="{Binding IsPlaying,Converter={StaticResource VisibilityConverter}}" Click="OpenNowPlayingPage" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="40">
+                        <StackPanel x:Name="PlayingPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <local:Animations HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
+                        </StackPanel>
+                    </Grid>
+                </Button>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2">
+                <Button Click="OpenDownloadsPage" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="40" x:Name="DownloadIcon">
+                    <Image Source="/Assets/PcAppIcon/Download.png" Width="30" Stretch="Uniform"/>
+                    </Grid>
+                </Button>
+
+                <Button Click="OpenSettingsPage" Style="{StaticResource PlainButtonStyle}">
+                    <Grid Height="40" x:Name="SettingIcon">
+                    <Image Source="/Assets/PcAppIcon/Setting.png" Width="30" Stretch="Uniform"/>
+                    </Grid>
+                </Button>
+
+            </StackPanel>
+
+
+        </Grid>
+
+</UserControl>

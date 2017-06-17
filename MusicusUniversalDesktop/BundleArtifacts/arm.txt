@@ -1,0 +1,4 @@
+MainPackage=C:\Users\ayush\Downloads\Windows 10 Airstem\Windows 10 Airstem\MusicusUniversalDesktop\MusicusUniversalDesktop\bin\ARM\Release\MusicusUniversalDesktop_2017.4.11.0_ARM.appx
+SymbolPackage=C:\Users\ayush\Downloads\Windows 10 Airstem\Windows 10 Airstem\MusicusUniversalDesktop\MusicusUniversalDesktop\AppPackages\MusicusUniversalDesktop_2017.4.11.0_Test\MusicusUniversalDesktop_2017.4.11.0_ARM.appxsym
+ResourcePack=C:\Users\ayush\Downloads\Windows 10 Airstem\Windows 10 Airstem\MusicusUniversalDesktop\MusicusUniversalDesktop\bin\ARM\Release\MusicusUniversalDesktop_2017.4.11.0_scale-100.appx
+ResourcePack=C:\Users\ayush\Downloads\Windows 10 Airstem\Windows 10 Airstem\MusicusUniversalDesktop\MusicusUniversalDesktop\bin\ARM\Release\MusicusUniversalDesktop_2017.4.11.0_scale-400.appx

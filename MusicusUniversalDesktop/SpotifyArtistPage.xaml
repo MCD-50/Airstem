@@ -1,0 +1,142 @@
+﻿<Musicus:PageBase
+    x:Class="Musicus.SpotifyArtistPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Musicus"
+    xmlns:Musicus="using:Musicus"
+    mc:Ignorable="d"
+    
+    x:Name="Page"
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:utilities="using:Musicus.Utilities"
+    xmlns:customTriggers="using:Musicus.Helpers.Triggers"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    DataContext="{Binding SpotifyArtist, Source={StaticResource Locator}}">
+
+
+    <Grid>
+
+        <Grid x:Name="BackgroundImage" Height="330" VerticalAlignment="Top">
+            <Grid.Background>
+                <ImageBrush utilities:BlurImageTool.Source="{Binding Artist.MainImage.Small}" utilities:BlurImageTool.BlurPercent="151" Stretch="UniformToFill" Opacity=".35"/>
+            </Grid.Background>
+        </Grid>
+
+        <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource PivotHeaderTemplate}">
+            <PivotItem x:Name="MainPivotItem1" Header="OVERVIEW" Margin="0">
+                <ScrollViewer>
+                    <StackPanel>
+
+                        <TextBlock Margin="{StaticResource PcPadding}" 
+                                   Text="{Binding OverViewMessage}" 
+                                   Visibility="{Binding OverViewMessage,Converter={StaticResource EmptyVisibilityConverter}}"
+                                   Style="{StaticResource MessageTextStyle}"/>
+
+                        <Grid Visibility="{Binding IsLoading,Converter={StaticResource ReverseVisibilityConverter}}">
+                            <Grid Margin="12,5" Visibility="{Binding OverViewMessage,Converter={StaticResource ReverseEmptyVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border x:Name="OuterB" CornerRadius="220" Background="#131313">
+                                    <Border x:Name="InnerB" Width="220" Height="220" CornerRadius="220">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding Artist.MainImage.ExtraLarge}" Stretch="UniformToFill"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Border>
+
+                                <TextBlock Margin="10,0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           Style="{StaticResource PrimaryTextStyle}">                                                  
+                                        <Run Text="{Binding Artist.Name}" IsTextScaleFactorEnabled="False"/><LineBreak/>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+
+
+                        <Grid Margin="12,0,12,5" Visibility="{Binding IsLoading,Converter={StaticResource ReverseVisibilityConverter}}">
+                            <Grid Visibility="{Binding OverViewMessage,Converter={StaticResource ReverseEmptyVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock VerticalAlignment="Center" Foreground="Gray" Text="Track View" FontWeight="Light" Style="{StaticResource PrimaryTextStyle}"/>
+                                <ToggleSwitch Grid.Column="1" Foreground="Gray" IsOn="{Binding SettingViewModel.TrackView, Mode=TwoWay}"/>
+                            </Grid>
+                        </Grid>
+
+
+                        <Grid Margin="0,10,0,0" Visibility="{Binding IsLoading,Converter={StaticResource ReverseVisibilityConverter}}">
+
+                            <Grid Visibility="{Binding OverViewMessage,Converter={StaticResource ReverseEmptyVisibilityConverter}}">
+
+                                <Border Background="Black" />
+
+                                <Grid Visibility="{Binding SettingViewModel.TrackView, Converter={StaticResource VisibilityConverter}}">
+                                    <TextBlock Margin="{StaticResource PcPadding}" 
+                                               Text="{Binding TrackMessage}" 
+                                               Visibility="{Binding TrackMessage,Converter={StaticResource EmptyVisibilityConverter}}"
+                                               Style="{StaticResource MessageTextStyle}"/>
+                                </Grid>
+
+                                <Grid Visibility="{Binding SettingViewModel.TrackView, Converter={StaticResource ReverseVisibilityConverter}}">
+                                    <TextBlock Margin="{StaticResource PcPadding}" 
+                                               Text="{Binding AlbumMessage}" 
+                                               Visibility="{Binding AlbumMessage,Converter={StaticResource EmptyVisibilityConverter}}"
+                                               Style="{StaticResource MessageTextStyle}"/>
+                                </Grid>
+
+
+                                <helpers:EdgeTappedListView x:Name="TrackListView" 
+                                                            OddRowBackground="{StaticResource MusicusLowColor}"
+                                                            IsItemLeftEdgeTapEnabled="False" 
+                                                            ItemsSource="{Binding TopTracks}" 
+                                                            Padding="{StaticResource PcPadding}"
+                                                            Visibility="{Binding SettingViewModel.TrackView, Converter={StaticResource VisibilityConverter}}"
+                                                            IsItemClickEnabled="True">
+
+                                    <ListView.ItemTemplateSelector>
+
+                                        <helpers:DataTemplateHelper AdvertTemplate="{StaticResource AdvertTemplatePc}"
+                                                                    ListAdvertTemplate="{StaticResource ListAdvertTemplateForPaidMicrosoftAdsPc}"
+                                                                    NormalTemplate="{StaticResource SpotifyArtistPageSongsTemplate}"/>
+                                    </ListView.ItemTemplateSelector>
+
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:InvokeCommandAction Command="{Binding SongClickRelayCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+
+                                </helpers:EdgeTappedListView>
+
+                                <GridView x:Name="AlbumGridView" 
+                                          ItemsSource="{Binding TopAlbums}" 
+                                          Visibility="{Binding SettingViewModel.TrackView, Converter={StaticResource ReverseVisibilityConverter}}"
+                                          IsItemClickEnabled="True" 
+                                          ItemClick="AlbumClick" 
+                                          Padding="{StaticResource PcPadding}">
+
+                                    <GridView.ItemTemplateSelector>
+                                        <helpers:DataTemplateHelper AdvertTemplate="{StaticResource AdvertTemplatePc}"
+                                                                    ListAdvertTemplate="{StaticResource ListAdvertTemplateForPaidMicrosoftAdsPc}"
+                                                                    NormalTemplate="{StaticResource SearchArtistAlbumTemplate}"/>
+                                    </GridView.ItemTemplateSelector>
+
+                                </GridView>
+
+                            </Grid>
+                        </Grid>
+
+
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+
+    </Grid>
+</Musicus:PageBase>

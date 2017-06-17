@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="Musicus.SongViewer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"  
+    xmlns:local="using:Musicus"   
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    Name="Page"
+    d:DesignHeight="80"
+    d:DesignWidth="300">
+
+    <Grid Margin="0,0,0,5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        <Grid x:Name="RootGrid" Holding="Song_OnHolding">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout Opened="MenuFlyout_Opened">
+
+                    <MenuFlyoutItem x:Name="PlayTrack" Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="Play" Click="PlayClick" />
+
+                    <MenuFlyoutItem x:Name="RemovePlaylistTrack" Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="Remove" Click="RemovePlaylistClick" />
+
+                    <MenuFlyoutItem x:Name="Download" Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="Download" Click="DownloadButtonBase_OnClick"
+                                    Visibility="{Binding SongState, Converter={StaticResource DownLoadListedSongStateConverter}}"/>
+
+                    <MenuFlyoutItem x:Name="Cancel" Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="Cancel" Click="CancelButtonBase_OnClick" 
+                                    Visibility="{Binding SongState, Converter={StaticResource DownloadingSongStateConverter}}"/>
+
+                    <MenuFlyoutItem x:Name="DiscoverArtistOption" Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="Discover artist" Click="DiscoverMenuFlyoutItem_OnClick" />
+
+                    <MenuFlyoutItem x:Name="DeleteOption" Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="Delete" Click="DeleteMenuFlyoutItem_OnClick" />
+
+                    <MenuFlyoutSubItem Text="Add to" x:Name="FlyoutSubMenu">
+                        <MenuFlyoutItem x:Name="AddToPlaylistOption" Style="{StaticResource MenuFlyoutItemStyle}"
+                                        Text="Playlist" Click="AddToMenuFlyoutItem_OnClick" />
+                        <MenuFlyoutItem x:Name="AddToQueueOption" Style="{StaticResource MenuFlyoutItemStyle}"
+                                        Text="Queue" Click="AddToQueueFlyoutItem_OnClick" />
+                    </MenuFlyoutSubItem>
+
+                    <MenuFlyoutItem x:Name="ManualMatch" Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="Rematch" Click="ManualMatch_Click" />
+
+                    <MenuFlyoutItem x:Name="Share" Style="{StaticResource MenuFlyoutItemStyle}"
+                                    Text="Share" Click="ShareClick" />
+                    
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+
+            
+            <StackPanel Opacity="{Binding IsMatched, Converter={StaticResource ReverseBoolOpacityConverter}}">
+                <TextBlock x:Name="SongNameTextBlock"  Style="{StaticResource PrimaryTextStyle}" Margin="0,0,0,2"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="ArtistNameTextBlock" Foreground="Gray" Style="{StaticResource SecondaryTextStyleMobile}" Margin="0,0,0,3"/>
+                    <Border x:Name="ArtistBorbderAlbum" Width="3" CornerRadius="3" Height="3" Margin="5,0,5,0" Background="Gray" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock x:Name="AlbumNameTextBlock" Foreground="Gray" Style="{StaticResource SecondaryTextStyleMobile}" Margin="0,0,0,3"/>
+                </StackPanel>
+            </StackPanel>
+            
+        </Grid>
+
+        <TextBlock FontSize="14" Grid.Row="1" Visibility="{Binding SongState, Converter={StaticResource MatchingSongStateConverter}}" 
+                   Text="Matching..." Style="{StaticResource SecondaryTextStyleMobile}"/>
+      
+        <TextBlock FontSize="14" Grid.Row="1" Visibility="{Binding SongState, Converter={StaticResource DownLoadListedSongStateConverter}}" 
+                   Text="Online" Style="{StaticResource SecondaryTextStyleMobile}"/>
+
+        <TextBlock FontSize="14" Grid.Row="1" Visibility="{Binding SongState, Converter={StaticResource NoMatchSongStateConverter}}" 
+                   Text="Re-match" Style="{StaticResource SecondaryTextStyleMobile}"/>
+        
+        <Grid x:Name="DownloadProgressGrid" Grid.Row="1">
+            <Grid Margin="0,2,0,0" Visibility="{Binding SongState, Converter={StaticResource DownloadingSongStateConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ProgressBar Value="{Binding Download.BytesReceived,Mode=TwoWay}" Height="3" 
+                             Foreground="{StaticResource MusicusOtherColor}" Maximum="{Binding Download.BytesToReceive, Mode=TwoWay}" />
+
+                <TextBlock Text="{Binding Download.Status}" Style="{StaticResource SecondaryTextStyleMobile}"
+                           FontSize="14" Grid.Row="1" HorizontalAlignment="Left"
+                           VerticalAlignment="Top"/>
+
+                <TextBlock Style="{StaticResource SecondaryTextStyleMobile}" FontSize="14" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top">             
+                    <Run Text="{Binding Download.BytesReceived}"/>
+                    <Run Text="MB"/>
+                    <Run Text="/"/>
+                    <Run Text="{Binding Download.BytesToReceive}"/>
+                    <Run Text="MB"/>
+                </TextBlock>
+            </Grid>
+        </Grid>
+        
+    </Grid>
+    
+</UserControl>

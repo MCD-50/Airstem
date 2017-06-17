@@ -1,0 +1,195 @@
+﻿<Application
+    x:Class="Musicus.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Musicus"
+    xmlns:styles="using:Musicus.Styles"
+    xmlns:common="using:Musicus.Core.Converters"
+    xmlns:Musicus="using:Musicus"
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:Utilities="using:Musicus.Utilities"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"   
+    xmlns:vm="using:Musicus.ViewModel"   
+    RequestedTheme="Dark">
+
+    <Application.Resources>
+
+        <ResourceDictionary>
+
+            <vm:ViewModelLocator x:Key="Locator" />
+            <common:BigToSmallCoverter x:Key="BigToSmallConverter" />
+            <common:VisibilityConverter x:Key="VisibilityConverter" />
+            <common:VisibilityConverter x:Key="ReverseVisibilityConverter" Reverse="True" />
+            <common:EmptyListToVisibilityConverter x:Key="EmptyListToVisibilityConverter" />
+            <common:EmptyListToVisibilityConverter x:Key="ReverseEmptyListToVisibilityConverter" Reverse="True" />
+            <common:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+            <common:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <common:BoolToOppositeConverter x:Key="BoolToOppositeConverter" />
+            <common:TimespanToDoubleConverter x:Key="TimespanToDoubleConverter" />
+            <common:TimespanToStringConverter x:Key="TimespanToStringConverter" />
+            <common:StringToVisibiltyConverter x:Key="StringToVisibiltyConverter" />
+
+            <common:StringToVisibiltyConverter x:Key="ReverseStringToVisibiltyConverter" Reverse="True"/>
+
+            <common:UpperCaseConverter x:Key="UpperCaseConverter" />
+            <common:LowerCaseConverter x:Key="LowerCaseConverter" />
+            <common:NotEmptyToStringConverter x:Key="DashNotEmptyToStringConverter" NotEmptyText="-" />
+            <common:CountToPluralConverter x:Key="SongToPluralConverter" SingularText="Song"
+                                       PluralText="Songs" />
+            <common:ImageSourceConverter x:Key="ImageSourceConverter"/>
+            <common:CountToPluralConverter x:Key="DownloadToPluralConverter" SingularText="Download"
+                                       PluralText="Downloads" />
+            <common:CountToPluralConverter x:Key="PlayToPluralConverter" SingularText="Play"
+                                       PluralText="Plays" />
+
+
+            <common:FirstLetterUpperCaseCoverter x:Key="FirstLetterUpperCaseCoverter"/>
+            <common:FirstLetterPlaylistImageTextCoverter x:Key="FirstLetterPlaylistImageTextCoverter"/>
+            <common:EmptyVisibilityConverter x:Key="EmptyVisibilityConverter"/>
+
+            <common:EmptyVisibilityConverter x:Key="ReverseEmptyVisibilityConverter" Reverse="True" />
+            
+            <common:CountToPluralConverter x:Key="ArtistToPluralConverter"  SingularText="Artist"
+                                       PluralText="Artists" />
+
+            <common:CountToPluralConverter x:Key="PlaylistToPluralConverter"  SingularText="Playlist"
+                                       PluralText="Playlists" />
+
+            <common:CountToPluralConverter x:Key="AlbumToPluralConverter"  SingularText="Album"
+                                       PluralText="Albums" />
+
+            <common:AvailabilityToColorConverter x:Key="AvailabilityToColor"/>
+        
+            <local:BoolOpacityConverter x:Name="ReverseBoolOpacityConverter" IsReverse="True" />
+            <local:SongStateConverter x:Key="DownloadingSongStateConverter" SongState="Downloading" />
+            <local:SongStateConverter x:Key="NoneSongStateConverter" SongState="None"/>
+            <local:SongStateConverter x:Key="DownLoadListedSongStateConverter" SongState="DownloadListed"/>
+            <local:SongStateConverter x:Key="MatchingSongStateConverter" SongState="Matching" />
+            <local:SongStateConverter x:Key="NoMatchSongStateConverter" SongState="NoMatch" />
+            <local:DownloadingMarginConverter x:Key="DownloadingMarginConverter"/>
+
+
+
+
+            <!--<common:ContentConverter x:Key="SingleMultiSelectionModeConverter">
+                <common:ContentConverter.TrueContent>
+                    <ListViewSelectionMode>Multiple</ListViewSelectionMode>
+                </common:ContentConverter.TrueContent>
+                <common:ContentConverter.FalseContent>
+                    <ListViewSelectionMode>Single</ListViewSelectionMode>
+                </common:ContentConverter.FalseContent>
+            </common:ContentConverter>
+
+            <common:ContentConverter x:Key="NoneMultiSelectionModeConverter">
+                <common:ContentConverter.TrueContent>
+                    <ListViewSelectionMode>Multiple</ListViewSelectionMode>
+                </common:ContentConverter.TrueContent>
+                <common:ContentConverter.FalseContent>
+                    <ListViewSelectionMode>None</ListViewSelectionMode>
+                </common:ContentConverter.FalseContent>
+            </common:ContentConverter>-->
+
+
+
+
+            
+            <!-- airstem custom colors -->
+            <SolidColorBrush x:Key="MusicusPivotTitleTextColor" Color="White"/>
+            <SolidColorBrush x:Key="MusicusPivotItemSelectedTextColor" Color="White"/>
+            <SolidColorBrush x:Key="MusicusPivotItemUnSelectedTextColor" Opacity=".5" Color="White"/>
+            <SolidColorBrush x:Key="MusicusOtherColor" Color="{ThemeResource SystemAccentColor}"/>
+            <SolidColorBrush x:Key="MusicusLowColor" Color="#131313"/>
+            <SolidColorBrush x:Key="MusicusNotificationColor" Color="#212121"/>
+            <SolidColorBrush x:Key="MusicusVideoColor" Color="{ThemeResource SystemAccentColor}"/>
+
+
+
+
+            <helpers:DoubleWrapper x:Key="WidthConverter" x:Name="WidthConverter"/>
+
+
+
+            <!--pickers jumplist and overriding colors-->
+
+
+
+
+            <JumpListItemBackgroundConverter x:Key="JumpListItemBackgroundConverter" />
+            <JumpListItemForegroundConverter x:Key="JumpListItemForegroundConverter" />
+            <SolidColorBrush x:Key="JumpListItemBackgroundBrush" Color="{ThemeResource SystemColorControlAccentColor}"/>
+            <SolidColorBrush x:Key="JumpListItemTextForegroundBrush" Color="White" />
+
+
+            <Thickness x:Key="PcPadding">12,5,12,5</Thickness>
+            <Thickness x:Key="MobilePadding">12,5,12,5</Thickness>
+            <Thickness x:Key="RightPadding">0,0,10,0</Thickness>
+            <Thickness x:Key="PcAnimationPadding">1.5,0</Thickness>
+          
+
+            <Thickness x:Key="FromTenUpTenRightPadding">0,10,10,0</Thickness>
+            <Thickness x:Key="FromTenRightPadding">0,0,10,0</Thickness>
+            <Thickness x:Key="FromTenUpPadding">0,10,0,0</Thickness>
+            <Thickness x:Key="FromTenLeftTenRightPadding">10,0,10,0</Thickness>
+            <Thickness x:Key="FromFiveUpPaddingMobile">0,5,0,0</Thickness>
+            <Thickness x:Key="FromFiveUpTenRightPaddingMobile">0,5,10,0</Thickness>
+
+            <SolidColorBrush x:Key="ListViewGroupHeaderForegroundThemeBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="ListViewGroupHeaderPointerOverForegroundThemeBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="ListViewGroupHeaderPressedForegroundThemeBrush" Color="Transparent" />
+
+            <SolidColorBrush x:Key="ListViewItemPlaceholderBackgroundThemeBrush" Color="Transparent" />
+             <!--transprent-->
+            <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrush" Color="{ThemeResource SystemBaseLowColor}"/>
+            <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="ListViewItemSelectedForegroundThemeBrush" Color="White" />
+             <!--transprent-->
+            <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrush" Color="{ThemeResource SystemBaseLowColor}"/>
+            <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrush" Color="Transparent" />
+
+
+            <!-- styles of UI controls -->
+
+
+            <Style x:Key="AppFrame" TargetType="Frame">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+                <Setter Property="ContentTransitions">
+                    <Setter.Value>
+                        <TransitionCollection>
+                            <NavigationThemeTransition>
+                                <ContinuumNavigationTransitionInfo/>
+                            </NavigationThemeTransition>
+                        </TransitionCollection>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Frame">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                Content="{TemplateBinding Content}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Margin="{TemplateBinding Padding}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <ResourceDictionary.MergedDictionaries>
+                <!--<styles:DataTemplateStyling/>-->
+                <ResourceDictionary Source="ms-appx:///Styles/ControlStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/MobileTemplate.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/PcTemplate.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Styles/OtherTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,96 @@
+﻿<Musicus:PageBase
+    x:Class="Musicus.SpotifyArtistPage"
+     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Musicus"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+   
+    x:Name="Page"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:helpers="using:Musicus.Helpers"
+    xmlns:Musicus="using:Musicus"
+    DataContext="{Binding SpotifyArtist, Source={StaticResource Locator}}">
+
+    <Grid>
+
+        <Grid Margin="0,80,0,0">
+            <Grid.Background>
+                <ImageBrush ImageSource="{Binding Artist.MainImage.ExtraLarge}" Stretch="UniformToFill" Opacity=".35"/>
+            </Grid.Background>
+        </Grid>
+
+        <Pivot x:Name="MainPivot" Title="{Binding Name, Converter={StaticResource UpperCaseConverter}}" HeaderTemplate="{StaticResource PivotHeaderTemplate}">
+
+            <PivotItem x:Name="MainPivotItem1" Header="tracks" Margin="0">
+                <Grid>
+
+                    <TextBlock Margin="{StaticResource PcPadding}" 
+                               Text="{Binding OverViewMessage}" 
+                               Visibility="{Binding OverViewMessage,Converter={StaticResource EmptyVisibilityConverter}}"
+                               Style="{StaticResource MessageTextStyle}"/>
+
+                    <TextBlock Margin="{StaticResource PcPadding}" 
+                               Text="{Binding TrackMessage}" 
+                               Visibility="{Binding TrackMessage, Converter={StaticResource EmptyVisibilityConverter}}"
+                               Style="{StaticResource MessageTextStyle}"/>
+
+
+                    <ListView ItemsSource="{Binding TopTracks}" 
+                              Padding="{StaticResource PcPadding}"
+                              IsItemClickEnabled="True">
+
+                        <ListView.ItemTemplateSelector>
+
+                            <helpers:DataTemplateHelper AdvertTemplate="{StaticResource AdvertTemplateMobile}"
+                                                        ListAdvertTemplate="{StaticResource ListAdvertTemplateForPaidMicrosoftAdsMobile}"
+                                                        NormalTemplate="{StaticResource SpotifyArtistPageSongsTemplateMobile}"/>
+
+                        </ListView.ItemTemplateSelector>
+
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:InvokeCommandAction Command="{Binding SongClickRelayCommand}" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+
+                    </ListView>
+
+                </Grid>
+            </PivotItem>
+
+            <PivotItem x:Name="MainPivotItem2" Header="albums" Margin="0">
+                <Grid>
+
+                    <TextBlock Margin="{StaticResource PcPadding}" 
+                               Text="{Binding OverViewMessage}" 
+                               Visibility="{Binding OverViewMessage,Converter={StaticResource EmptyVisibilityConverter}}"
+                               Style="{StaticResource MessageTextStyle}"/>
+
+                    <TextBlock Margin="{StaticResource PcPadding}" 
+                               Text="{Binding AlbumMessage}" 
+                               Visibility="{Binding AlbumMessage,Converter={StaticResource EmptyVisibilityConverter}}"
+                               Style="{StaticResource MessageTextStyle}"/>
+
+                    <ListView ItemsSource="{Binding TopAlbums}" 
+                              IsItemClickEnabled="True" 
+                              ItemClick="AlbumClick" 
+                              Padding="12,0,12,5">
+
+                        <ListView.ItemTemplateSelector>
+                            <helpers:DataTemplateHelper AdvertTemplate="{StaticResource AdvertTemplateMobile}"
+                                                        ListAdvertTemplate="{StaticResource ListAdvertTemplateForPaidMicrosoftAdsMobile}"
+                                                        NormalTemplate="{StaticResource SearchAlbumTemplateMobileTwo}"/>
+                        </ListView.ItemTemplateSelector>
+
+                    </ListView>
+
+
+                </Grid>
+            </PivotItem>
+
+        </Pivot>
+    </Grid>
+</Musicus:PageBase>

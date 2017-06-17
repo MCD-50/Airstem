@@ -1,0 +1,195 @@
+﻿<Musicus:PageBase 
+    x:Class="Musicus.CollectionPlaylistsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Musicus="using:Musicus"  
+    mc:Ignorable="d"  
+    xmlns:local="using:Musicus"
+    xmlns:customTriggers="using:Musicus.Helpers.Triggers" 
+    xmlns:utilities="using:Musicus.Utilities"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    x:Name="Page"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Collection}">
+
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="PlaylistTemplate" x:Name="PlaylistTemplate">
+                <StackPanel Margin="0,5" HorizontalAlignment="Left">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="RightTapped">
+                            <utilities:ShowFlyoutAction/>
+                        </core:EventTriggerBehavior>
+                        <core:EventTriggerBehavior EventName="Holding">
+                            <utilities:ShowFlyoutAction/>
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" Text="Play"                                   
+                                            Command="{Binding DataContext.Commands.EntryPlayClickCommand, ElementName=Page}"
+                                            CommandParameter="{Binding}"/>
+
+                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" Text="Delete"     
+                                            Command="{Binding DataContext.Commands.DeleteClickCommand, ElementName=Page}"      
+                                            CommandParameter="{Binding}"/>
+
+                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" Text="Share"
+                                            Command="{Binding DataContext.Commands.ShareClickCommand, ElementName=Page}"
+                                            CommandParameter="{Binding}"/>
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        
+                        <StackPanel>
+                            <Border Background="#272727" HorizontalAlignment="Center" Width="100" Height="3"/>
+                            <Border Background="#232323" HorizontalAlignment="Center" Width="115" Height="4"/>
+                            <Grid Background="#131313">
+                                <Image Source="/Assets/MissingArtwork.png" Height="130" Width="130" Stretch="UniformToFill"/>
+                                <Grid Height="130" Width="130">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="{Binding Songs[0].Song.Album.Artwork.Uri}" Stretch="UniformToFill"/>
+                                    </Grid.Background>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    
+                        
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,13,10,0">
+                            <TextBlock Text="{Binding Name, Converter={StaticResource FirstLetterUpperCaseCoverter}}" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" />
+                            <TextBlock Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}">
+                                 <Run Text="{Binding Songs.Count}" />                                                                               
+                                 <Run Text="{Binding Songs.Count, Converter={StaticResource SongToPluralConverter}}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="PlaylistTemplateMobile" x:Name="PlaylistTemplateMobile">
+                <StackPanel Margin="0,5" HorizontalAlignment="Left">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="RightTapped">
+                            <utilities:ShowFlyoutAction/>
+                        </core:EventTriggerBehavior>
+                        <core:EventTriggerBehavior EventName="Holding">
+                            <utilities:ShowFlyoutAction/>
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" Text="Play"                                   
+                                            Command="{Binding DataContext.Commands.EntryPlayClickCommand, ElementName=Page}"
+                                            CommandParameter="{Binding}"/>
+                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" Text="Delete"     
+                                            Command="{Binding DataContext.Commands.DeleteClickCommand, ElementName=Page}"      
+                                            CommandParameter="{Binding}"/>
+                            <MenuFlyoutItem Style="{StaticResource MenuFlyoutItemStyle}" Text="Share"
+                                            Command="{Binding DataContext.Commands.ShareClickCommand, ElementName=Page}"
+                                            CommandParameter="{Binding}"/>
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <StackPanel>
+                            <Border Background="#333333" HorizontalAlignment="Center" Width="60" Height="3"/>
+                            <Border Background="#232323" HorizontalAlignment="Center" Width="70" Height="4"/>
+                            <Grid Background="#131313">
+                                <Image Source="/Assets/MissingArtwork.png" Height="80" Width="80" Stretch="UniformToFill"/>
+                                <Grid Height="80" Width="80">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="{Binding Songs[0].Song.Album.Artwork.Uri}" Stretch="UniformToFill"/>
+                                    </Grid.Background>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="10,13,10,0">
+                            <TextBlock Text="{Binding Name, Converter={StaticResource FirstLetterUpperCaseCoverter}}" Margin="0,2,0,0" Style="{StaticResource PrimaryTextStyle}" />
+                            <TextBlock Margin="0,2,2,0" Style="{StaticResource SecondaryTextStyleMobile}">
+                                 <Run Text="{Binding Songs.Count}" />                                                                               
+                                 <Run Text="{Binding Songs.Count, Converter={StaticResource SongToPluralConverter}}"/>
+                            </TextBlock>
+                            <!--<TextBlock Margin="0,2,2,0" Text="{Binding CreatedOn}" FontSize="11" Style="{StaticResource SecondaryTextStyleMobile}"/>-->
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource PivotHeaderTemplate}">
+            <PivotItem x:Name="MainPivotItem1" Header="PLAYLISTS" Margin="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Margin="{StaticResource PcPadding}" HorizontalAlignment="Right" Click="NewPlaylistClick" Style="{StaticResource PlainButtonStyle}">
+                        <Border Width="40" CornerRadius="40" Height="40" Background="{StaticResource SystemControlDisabledBaseLowBrush}">
+                            <SymbolIcon Symbol="Add"/>
+                        </Border>
+                    </Button>
+                    
+                    <Grid Grid.Row="1">
+                        <TextBlock Style="{StaticResource MessageTextStyle}" 
+                                   Visibility="{Binding Service.Playlists.Count, Converter={StaticResource EmptyListToVisibilityConverter}}" 
+                                   Text="Its empty here, go add few."
+                                   Margin="{StaticResource PcPadding}"/>
+
+                        <ListView x:Name="PlaylistsListView" 
+                                  IsItemClickEnabled="True" 
+                                  Padding="{StaticResource PcPadding}" 
+                                  ItemContainerStyle="{StaticResource NoMarginListViewItem}"           
+                                  ItemsSource="{Binding Service.Playlists}"
+                                  ItemTemplate="{StaticResource PlaylistTemplate}">
+
+                        
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="ItemClick">
+                                    <core:InvokeCommandAction Command="{Binding Commands.PlaylistClickCommand}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+
+                        </ListView>
+                        
+                    </Grid>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DeviceFamilyStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <customTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                       <Setter Target="PlaylistsListView.ItemTemplate" Value="{StaticResource PlaylistTemplateMobile}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+    </Grid>
+
+</Musicus:PageBase>

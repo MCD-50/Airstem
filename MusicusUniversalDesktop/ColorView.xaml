@@ -1,0 +1,29 @@
+﻿<Page
+    x:Class="Musicus.ColorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Musicus"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="Black" Opacity=".9">
+      
+        <Grid HorizontalAlignment="Stretch">
+            <ListView x:Name="ColorListView" IsItemClickEnabled="True" 
+                      Padding="{StaticResource PcPadding}" ItemClick="ColorListViewClicked">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel MinWidth="300" MaxWidth="700" >
+                            <TextBlock Text="Default color" Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,5" Visibility="{Binding Name, Converter={StaticResource StringToVisibiltyConverter}}"/>
+                            <Border Background="{Binding ColorBrush}" Height="70"/>
+                            <Rectangle Visibility="{Binding Name, Converter={StaticResource StringToVisibiltyConverter}}" Height=".7" Fill="#333333" Margin="0,10"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        
+    </Grid>
+</Page>
