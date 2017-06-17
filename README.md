@@ -19,7 +19,7 @@ Simply clone the repo
 Open the solution file `MusicusUniversalDesktop.sln` in Visual Studio. Then right-click and click Build on the solution. Nuget should download all missing packages, if not open the package manager and click `Restore Missing Packages`.
 
 
-## Building
+## Note
 
 You need various api keys for application to work properly.
 Please refer Musicus.Data/ApiKeys.cs and get youtube, lastfm, soundcloud api keys.
