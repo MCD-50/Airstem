@@ -14,3 +14,19 @@
     "win10-x64-aot": {}
   }
 }
+﻿{
+  "dependencies": {
+    "Android.NETCore.UniversalAndroidPlatform": "5.2.2"
+  },
+  "frameworks": {
+    "uap10.0": {}
+  },
+  "runtimes": {
+    "android10-arm": {},
+    "android10-arm-aot": {},
+    "android10-x86": {},
+    "android10-x86-aot": {},
+    "android10-x64": {},
+    "android10-x64-aot": {}
+  }
+ }
