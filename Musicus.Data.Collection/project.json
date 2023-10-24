@@ -21,3 +21,28 @@
     "win10-x64-aot": {}
   }
 }
+{
+  "dependencies":{
+    "IF.Lastfm.Zumicts": "0.4.1",
+    "Android.Blc.Build": "1.0.21",
+    "Android.Net.Http": "2.2.29",
+    "Android.NETCore.UniversalAndroidPlatform": "5.2.2",
+    "Newtonsoft.Json": "9.0.1",
+    "PCLStorage": "1.0.2",
+    "SQLite.Net-PCL": "3.1.1",
+    "TagLib.Portable": "1.0.4",
+  }
+  "frameworks": {
+    "uap10.0: {}
+  },
+  "runtimes": {
+    "android10-arm": {},
+    "android-arm-aot": {},
+    "android10-x86": {},
+    "android10-x86-aot": {},
+    "android10-x64": {},
+    "android10-x64-aot": {}
+  }
+}
+{
+    
